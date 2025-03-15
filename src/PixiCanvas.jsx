@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, useImperativeHandle, forwardRef } from "react";
+import { useEffect, useRef, useState, useImperativeHandle, forwardRef, useCallback } from "react";
 import * as PIXI from 'pixi.js';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -14,45 +14,53 @@ const PixiCanvas = forwardRef(({ onOpenModal, onCloseModal, onUpdatePixelColor }
     grid.lineStyle(1, 0xeeeeee, 1);
 
     for (let x = 0; x < appRef.current.screen.width; x += gridSize) {
-        grid.moveTo(x, 0);
-        grid.lineTo(x, appRef.current.screen.height);
+      grid.moveTo(x, 0);
+      grid.lineTo(x, appRef.current.screen.height);
     }
 
     for (let y = 0; y < appRef.current.screen.height; y += gridSize) {
-        grid.moveTo(0, y);
-        grid.lineTo(appRef.current.screen.width, y);
+      grid.moveTo(0, y);
+      grid.lineTo(appRef.current.screen.width, y);
     }
 
     stage.addChild(grid);
-};
+  };
 
-  useEffect(() => {
-    const app = new PIXI.Application({
-      width: 600,
-      height: 500,
-      backgroundColor: 0xffffff,
-    });
-
-    pixiContainer.current.appendChild(app.view);
-    appRef.current = app;
-
-    drawGrid(app.stage, gridSize);
-
+  const handlePixelClick = useCallback((id) => {
     const savedPixels = JSON.parse(localStorage.getItem('pixels')) || [];
-    setPixels(savedPixels);
+    const pixelData = savedPixels.find(pixel => pixel.id === id);
+    console.log('Открыть модальное окно для пикселя с ID:', id);
+    if (pixelData) {
+      setSelectedPixel(pixelData);
+    }
+    onOpenModal(pixelData);
+  },[onOpenModal]);
 
-    savedPixels.forEach((pixel) => {
-      addPixel(app.stage, pixel.x, pixel.y, pixel.color, pixel.id);
+
+  const onSelectPixel = useCallback((event, id) => {
+    event.stopPropagation();
+    setSelectedPixel(id);
+    handlePixelClick(id);
+  },[handlePixelClick]);
+
+  const onDragEnd = useCallback((event, id) => {
+    const pixel = event.currentTarget;
+    pixel.dragging = false;
+    pixel.dragData = null;
+
+    setPixels((prev) => {
+      const updatedPixels = prev.map((p) =>
+        p.id === id ? { ...p, x: pixel.x, y: pixel.y } : p
+      );
+      localStorage.setItem('pixels', JSON.stringify(updatedPixels));
+      return updatedPixels;
     });
 
-    return () => {
-      if (appRef.current) {
-        appRef.current.destroy(true);
-      }
-    };
-  }, []);
+    handlePixelClick(id);
+  },[handlePixelClick]);
 
-  const addPixel = (stage, x, y, color = '#DBD4E6', id = uuidv4()) => {
+
+  const addPixel = useCallback((stage, x, y, color = '#DBD4E6', id = uuidv4()) => {
     const existingPixel = pixels.find(pixel => pixel.id === id);
     if (existingPixel) {
       setPixels(prev => {
@@ -89,7 +97,33 @@ const PixiCanvas = forwardRef(({ onOpenModal, onCloseModal, onUpdatePixelColor }
       }
       return prev;
     });
-  };
+  }, [onDragEnd, onSelectPixel, pixels]);
+
+  useEffect(() => {
+    const app = new PIXI.Application({
+      width: 600,
+      height: 500,
+      backgroundColor: 0xffffff,
+    });
+
+    pixiContainer.current.appendChild(app.view);
+    appRef.current = app;
+
+    drawGrid(app.stage, gridSize);
+
+    const savedPixels = JSON.parse(localStorage.getItem('pixels')) || [];
+    setPixels(savedPixels);
+
+    savedPixels.forEach((pixel) => {
+      addPixel(app.stage, pixel.x, pixel.y, pixel.color, pixel.id);
+    });
+
+    return () => {
+      if (appRef.current) {
+        appRef.current.destroy(true);
+      }
+    };
+  }, [addPixel]);
 
   useImperativeHandle(ref, () => ({
     addPixel: (x, y, color) => {
@@ -128,11 +162,11 @@ const PixiCanvas = forwardRef(({ onOpenModal, onCloseModal, onUpdatePixelColor }
     },
   }));
 
-  const onSelectPixel = (event, id) => {
-    event.stopPropagation();
-    setSelectedPixel(id);
-    handlePixelClick(id);
-  };
+  // const onSelectPixel = (event, id) => {
+  //   event.stopPropagation();
+  //   setSelectedPixel(id);
+  //   handlePixelClick(id);
+  // };
 
   const onDragStart = (event) => {
     const pixel = event.currentTarget;
@@ -140,21 +174,21 @@ const PixiCanvas = forwardRef(({ onOpenModal, onCloseModal, onUpdatePixelColor }
     pixel.dragging = true;
   };
 
-  const onDragEnd = (event, id) => {
-    const pixel = event.currentTarget;
-    pixel.dragging = false;
-    pixel.dragData = null;
+  // const onDragEnd = (event, id) => {
+  //   const pixel = event.currentTarget;
+  //   pixel.dragging = false;
+  //   pixel.dragData = null;
 
-    setPixels((prev) => {
-      const updatedPixels = prev.map((p) =>
-        p.id === id ? { ...p, x: pixel.x, y: pixel.y } : p
-      );
-      localStorage.setItem('pixels', JSON.stringify(updatedPixels));
-      return updatedPixels;
-    });
+  //   setPixels((prev) => {
+  //     const updatedPixels = prev.map((p) =>
+  //       p.id === id ? { ...p, x: pixel.x, y: pixel.y } : p
+  //     );
+  //     localStorage.setItem('pixels', JSON.stringify(updatedPixels));
+  //     return updatedPixels;
+  //   });
 
-    handlePixelClick(id);
-  };
+  //   handlePixelClick(id);
+  // };
 
   const gridSize = 10;
 
@@ -165,24 +199,13 @@ const PixiCanvas = forwardRef(({ onOpenModal, onCloseModal, onUpdatePixelColor }
 
       if (newPosition.x < 0 || newPosition.x > appRef.current.renderer.width - gridSize ||
         newPosition.y < 0 || newPosition.y > appRef.current.renderer.height - gridSize) {
-      return;
+        return;
       }
 
       pixel.x = Math.round(newPosition.x / gridSize) * gridSize;
       pixel.y = Math.round(newPosition.y / gridSize) * gridSize;
     }
   };
-
-   const handlePixelClick = (id) => {
-    const savedPixels = JSON.parse(localStorage.getItem('pixels')) || [];
-    const pixelData = savedPixels.find(pixel => pixel.id === id);
-    console.log('Открыть модальное окно для пикселя с ID:', id);
-    if (pixelData) {
-      setSelectedPixel(pixelData);
-    }
-    onOpenModal(pixelData);
-  };
-
   console.log(selectedPixel)
 
 
@@ -199,19 +222,19 @@ const PixiCanvas = forwardRef(({ onOpenModal, onCloseModal, onUpdatePixelColor }
   // }, [pixels]);
 
   console.log(localStorage.getItem('pixels', JSON.stringify()))
-  return(
-      <>
-          <div className="canvas-container">
-            <div className="pixi-canvas block" ref={pixiContainer}></div>
-          </div>
-          <div>
-            {/* <div className="pixi-canvas__button-wrapper">
+  return (
+    <>
+      <div className="canvas-container">
+        <div className="pixi-canvas block" ref={pixiContainer}></div>
+      </div>
+      <div>
+        {/* <div className="pixi-canvas__button-wrapper">
               <button className="pixi-canvas__button button" onClick={zoomIn}>+</button>
               <button className="pixi-canvas__button button" onClick={zoomOut}>-</button>
             </div> */}
-          </div>
+      </div>
 
-      </>
+    </>
   )
 });
 
