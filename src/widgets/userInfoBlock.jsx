@@ -6,7 +6,7 @@ const UserInfoBlock = () => {
   // fetch userdata
 
   useEffect(() => {
-    fetch('/.netlify/functions/proxy/PixelBackendScripted/api/users')
+    fetch('http://80.90.189.80:8080/PixelBackendScripted/api/users')
         .then((response) => response.json())
         .then((data) => setUser(data))
         .catch((error) => console.error('Error fetching users:', error));
