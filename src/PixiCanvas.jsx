@@ -123,7 +123,7 @@ const PixiCanvas = forwardRef(({ onOpenModal, onCloseModal, onUpdatePixelColor }
         appRef.current.destroy(true);
       }
     };
-  }, [addPixel]);
+  }, []);
 
   useImperativeHandle(ref, () => ({
     addPixel: (x, y, color) => {
@@ -162,11 +162,33 @@ const PixiCanvas = forwardRef(({ onOpenModal, onCloseModal, onUpdatePixelColor }
     },
   }));
 
+  // const onSelectPixel = (event, id) => {
+  //   event.stopPropagation();
+  //   setSelectedPixel(id);
+  //   handlePixelClick(id);
+  // };
+
   const onDragStart = (event) => {
     const pixel = event.currentTarget;
     pixel.dragData = event.data;
     pixel.dragging = true;
   };
+
+  // const onDragEnd = (event, id) => {
+  //   const pixel = event.currentTarget;
+  //   pixel.dragging = false;
+  //   pixel.dragData = null;
+
+  //   setPixels((prev) => {
+  //     const updatedPixels = prev.map((p) =>
+  //       p.id === id ? { ...p, x: pixel.x, y: pixel.y } : p
+  //     );
+  //     localStorage.setItem('pixels', JSON.stringify(updatedPixels));
+  //     return updatedPixels;
+  //   });
+
+  //   handlePixelClick(id);
+  // };
 
   const gridSize = 10;
 
@@ -186,6 +208,18 @@ const PixiCanvas = forwardRef(({ onOpenModal, onCloseModal, onUpdatePixelColor }
   };
   console.log(selectedPixel)
 
+
+  // useEffect(() => {
+  //   if (appRef.current) {
+  //     // Clear all existing pixels
+  //     appRef.current.stage.removeChildren();
+
+  //     // Redraw all pixels with updated colors
+  //     pixels.forEach((pixel) => {
+  //       addPixel(appRef.current.stage, pixel.x, pixel.y, pixel.color, pixel.id);
+  //     });
+  //   }
+  // }, [pixels]);
 
   console.log(localStorage.getItem('pixels', JSON.stringify()))
   return (
