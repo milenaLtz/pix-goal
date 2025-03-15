@@ -11,7 +11,7 @@ const UserGoalsBlock = () => {
 
     const [goals, setGoals] = useState([]);
     useEffect(() => {
-      fetch('http://80.90.189.80:8080/PixelBackendScripted/api/tasks/4')
+      fetch('/api/PixelBackendScripted/api/tasks/4')
           .then((response) => response.json())
           .then((data) => setGoals(data))
           .catch((error) => console.error('Error fetching users:', error));
