@@ -1,6 +1,3 @@
-import { useState } from "react";
-
-
 const DeleteModal = (props) => {
 
   const message = props.message;

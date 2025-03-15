@@ -12,7 +12,7 @@ const Header = () => {
                         <button className="header__button button">Создать</button>
                     </div>
                     <Link className="header__link" to="/homePage">
-                      <img src={avatar} width={25} height={25}/>
+                      <img src={avatar} alt="sample" width={25} height={25}/>
                     </Link>
                 </div>
             </header>

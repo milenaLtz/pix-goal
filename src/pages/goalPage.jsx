@@ -1,4 +1,4 @@
-import { Link, useNavigate, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { useRef, useState } from 'react';
 import Header from '../widgets/header';
 import IntroductionBlock from '../widgets/introductionBlock';

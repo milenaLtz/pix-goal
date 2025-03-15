@@ -1,9 +1,5 @@
 import avatar from '../shared/icons/icons8-avatar-96 1.svg';
-import cake from '../shared/icons/illustration/cake.svg';
-import cat from '../shared/icons/illustration/cat.svg';
-import car from '../shared/icons/illustration/car.svg';
-import rabbit from '../shared/icons/illustration/rabbit.svg';
-import heart from '../shared/icons/illustration/heart.svg';
+import cake from '../shared/icons/illustration/cake.svg'
 
 const IntroductionBlock = (props) => {
 

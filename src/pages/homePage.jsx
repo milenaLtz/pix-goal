@@ -1,4 +1,3 @@
-import { Link, useNavigate } from 'react-router-dom';
 import Header from '../widgets/header';
 import UserInfoBlock from '../widgets/userInfoBlock';
 import IntroductionBlock from '../widgets/introductionBlock';

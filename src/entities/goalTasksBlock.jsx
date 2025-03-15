@@ -1,19 +1,7 @@
 import TaskCard from "../widgets/taskCard";
-import { useRef } from "react";
-
 
 const GoalTasksBlock = ({onAddPixel}) => {
 
-  const canvasRef = useRef(null);
-
-  const handleAddPixelFromTask = () => {
-    if (canvasRef.current) {
-      // Координаты для добавления пикселя (например, верхний левый угол сетки)
-      const x = 0;
-      const y = 0;
-      canvasRef.current.addPixel(x, y, '#00ff00'); // Добавляем зелёный пиксель
-    }
-  };
 
     // fetch tasks
     const tasks = [

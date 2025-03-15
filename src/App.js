@@ -1,19 +1,10 @@
-import React, { Component } from "react"
+import React from "react"
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import HomePage from './pages/homePage';
 import GoalPage from './pages/goalPage';
-import logo from "./logo.svg"
 import "./App.scss"
 
 function App() {
-
-  const goals = [
-    { id: 1, title: "Научиться выпекать", freePixels: 387, image: "cake" },
-    { id: 2, title: "Получить кошку", freePixels: 500, image: "cat" },
-    { id: 3, title: "Покупка автомобиля", freePixels: 150, image: "car" },
-    { id: 4, title: "Путешествие", freePixels: 700, image: "rabbit" },
-    { id: 5, title: "Здоровое сердце", freePixels: 120, image: "heart" },
-  ];
 
   return (
     <>

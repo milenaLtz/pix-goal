@@ -14,8 +14,6 @@ const UserInfoBlock = () => {
 
   console.log(user[2])
 
-  const [userName, setUserName] = useState(user[2])
-
   return(
       <>
         <section className="main-page__block block user-block">

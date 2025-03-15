@@ -1,7 +1,6 @@
 import { useEffect, useRef, useState, useImperativeHandle, forwardRef } from "react";
 import * as PIXI from 'pixi.js';
 import { v4 as uuidv4 } from 'uuid';
-import PixelInfoBlock from "./widgets/pixelInfoBlock";
 
 const PixiCanvas = forwardRef(({ onOpenModal, onCloseModal, onUpdatePixelColor }, ref) => {
 
@@ -9,11 +8,6 @@ const PixiCanvas = forwardRef(({ onOpenModal, onCloseModal, onUpdatePixelColor }
   const appRef = useRef(null);
   const [pixels, setPixels] = useState([]);
   const [selectedPixel, setSelectedPixel] = useState(null);
-  const [selectedColor, setSelectedColor] = useState('#DBD4E6');
-  const [showModal, setShowModal] = useState(false);
-  const scaleStep = 0.1;
-  const minScale = 0.5;
-  const maxScale = 2;
 
   const drawGrid = (stage, gridSize) => {
     const grid = new PIXI.Graphics();
@@ -97,11 +91,6 @@ const PixiCanvas = forwardRef(({ onOpenModal, onCloseModal, onUpdatePixelColor }
     });
   };
 
-  const createPixel = () => {
-    const app = appRef.current;
-    addPixel(app.stage, app.screen.width / 2, app.screen.height / 2, selectedColor);
-  };
-
   useImperativeHandle(ref, () => ({
     addPixel: (x, y, color) => {
       if (!appRef.current) {
@@ -145,24 +134,6 @@ const PixiCanvas = forwardRef(({ onOpenModal, onCloseModal, onUpdatePixelColor }
     handlePixelClick(id);
   };
 
-  const deletePixel = () => {
-    if (!selectedPixel) return;
-
-    const app = appRef.current;
-    const updatedPixels = pixels.filter(pixel => pixel.id !== selectedPixel.id);
-
-    setPixels(updatedPixels);
-    localStorage.setItem('pixels', JSON.stringify(updatedPixels));
-
-    const pixelToDelete = app.stage.children.find(p => p.id === selectedPixel.id);
-    if (pixelToDelete) {
-      app.stage.removeChild(pixelToDelete);
-      pixelToDelete.destroy();
-    }
-    setSelectedPixel(null);
-    setShowModal(false);
-  };
-
   const onDragStart = (event) => {
     const pixel = event.currentTarget;
     pixel.dragData = event.data;
@@ -192,9 +163,6 @@ const PixiCanvas = forwardRef(({ onOpenModal, onCloseModal, onUpdatePixelColor }
     if (pixel.dragging) {
       const newPosition = pixel.dragData.getLocalPosition(pixel.parent);
 
-      const clampedX = Math.max(0, Math.min(newPosition.x, appRef.current.renderer.width - gridSize));
-      const clampedY = Math.max(0, Math.min(newPosition.y, appRef.current.renderer.height - gridSize));
-
       if (newPosition.x < 0 || newPosition.x > appRef.current.renderer.width - gridSize ||
         newPosition.y < 0 || newPosition.y > appRef.current.renderer.height - gridSize) {
       return;
@@ -204,28 +172,6 @@ const PixiCanvas = forwardRef(({ onOpenModal, onCloseModal, onUpdatePixelColor }
       pixel.y = Math.round(newPosition.y / gridSize) * gridSize;
     }
   };
-
-  const changePixelColor = (event) => {
-    setSelectedColor(event.target.value);
-    if (!selectedPixel) return;
-
-    const app = appRef.current;
-    const updatedPixels = pixels.map(pixel =>
-      pixel.id === selectedPixel ? { ...pixel, color: event.target.value } : pixel
-    );
-
-    setPixels(updatedPixels);
-    localStorage.setItem('pixels', JSON.stringify(updatedPixels));
-
-    const pixelToUpdate = app.stage.children.find(p => p.id === selectedPixel);
-    if (pixelToUpdate) {
-      app.stage.removeChild(pixelToUpdate);
-      pixelToUpdate.destroy();
-
-      const updatedPixelData = updatedPixels.find(p => p.id === selectedPixel);
-      addPixel(app.stage, updatedPixelData.x, updatedPixelData.y, updatedPixelData.color, updatedPixelData.id);
-    }
-};
 
    const handlePixelClick = (id) => {
     const savedPixels = JSON.parse(localStorage.getItem('pixels')) || [];
@@ -239,10 +185,6 @@ const PixiCanvas = forwardRef(({ onOpenModal, onCloseModal, onUpdatePixelColor }
 
   console.log(selectedPixel)
 
-
-  const closeModal = () => {
-    onCloseModal();
-  };
 
   // useEffect(() => {
   //   if (appRef.current) {
