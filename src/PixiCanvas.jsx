@@ -123,7 +123,7 @@ const PixiCanvas = forwardRef(({ onOpenModal, onCloseModal, onUpdatePixelColor }
         appRef.current.destroy(true);
       }
     };
-  }, []);
+  }, [addPixel]);
 
   useImperativeHandle(ref, () => ({
     addPixel: (x, y, color) => {
