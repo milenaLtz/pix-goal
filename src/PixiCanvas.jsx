@@ -123,7 +123,8 @@ const PixiCanvas = forwardRef(({ onOpenModal, onCloseModal, onUpdatePixelColor }
         appRef.current.destroy(true);
       }
     };
-  }, [addPixel]);
+  // eslint-disable-next-line
+  }, []);
 
   useImperativeHandle(ref, () => ({
     addPixel: (x, y, color) => {
