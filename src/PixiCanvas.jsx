@@ -142,7 +142,6 @@ const PixiCanvas = forwardRef(({ onOpenModal, onCloseModal, onUpdatePixelColor }
       setPixels(updatedPixels);
       localStorage.setItem('pixels', JSON.stringify(updatedPixels));
       const app = appRef.current;
-      window.location.reload();
       const graphics = appRef.current.stage.children.find(
         (child) => child.pixelId === pixelId
       );
