@@ -1,0 +1,35 @@
+.user-block__list {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  column-gap: 15px;
+  row-gap: 30px;
+  padding: 20px 50px;
+
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  @media (max-width: 320px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.user-block__item-title {
+  margin-bottom: 10px;
+  font-size: 14px;
+  line-height: 14px;
+  color: #484455;
+  opacity: 0.5;
+}
+
+.user-block__item-description {
+  margin: 0;
+  font-size: 14px;
+  line-height: 14px;
+  color: #484455;
+}
+
+.user-block__button {
+  margin: 0;
+  padding: 5px 50px;
+}
