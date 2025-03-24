@@ -4,6 +4,17 @@ import { v4 as uuidv4 } from 'uuid';
 
 const PixiCanvas = forwardRef(({ onOpenModal, onCloseModal, onUpdatePixelColor }, ref) => {
 
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+    useEffect(() => {
+      const handleResize = () => {
+        setIsMobile(window.innerWidth < 768);
+      };
+      window.addEventListener('resize', handleResize);
+      return () => {
+        window.removeEventListener('resize', handleResize);
+      }
+    }, []);
+
   const pixiContainer = useRef(null);
   const appRef = useRef(null);
   const [pixels, setPixels] = useState([]);
@@ -101,8 +112,8 @@ const PixiCanvas = forwardRef(({ onOpenModal, onCloseModal, onUpdatePixelColor }
 
   useEffect(() => {
     const app = new PIXI.Application({
-      width: 600,
-      height: 500,
+      width: isMobile ? 300 : 600,
+      height: isMobile ? 250 : 500,
       backgroundColor: 0xffffff,
     });
 
