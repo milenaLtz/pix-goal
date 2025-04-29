@@ -2,20 +2,26 @@ import { Link } from "react-router-dom";
 import { useState } from "react";
 import { DeleteModal, InfoModal } from '../../../widgets/modals';
 import { createPortal } from "react-dom";
+// import getGoal from "../api/getGoal";
+import deleteGoal from "../api/deleteModal";
 
 const Goal = (props) => {
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
+  const [response, setResponse] = useState('');
   const [infoModalOpen, setInfoModalOpen] = useState(false);
 
   const handleDeleteModalOpen = () => {
     setDeleteModalOpen(true);
-    console.log("deleteMode", deleteModalOpen);
+    // console.log("deleteMode", deleteModalOpen);
   };
 
   const handleDeleteGoal = () => {
+    deleteGoal(setResponse, props.id);
     setDeleteModalOpen(false);
     setInfoModalOpen(true);
   };
+
+  // console.log(response, props.image);
 
   return (
     <>
@@ -29,24 +35,27 @@ const Goal = (props) => {
           document.body
         )}
       {infoModalOpen &&
-        props.deletionResult === "success" &&
+        response === 'goal deleted successful' &&
         createPortal(
           <InfoModal
             message={`Все прошло отлично!
                       Цель "${props.title}"  была успешно удалена.`}
-            result={props.deletionResult}
-            closeModal={() => setInfoModalOpen(false)}
+            result={response}
+            closeModal={() => {
+              setInfoModalOpen(false)
+              window.location.reload();
+            }}
           />,
           document.body
         )}
       {infoModalOpen &&
-        props.deletionResult === "fail" &&
+        response === 'goal deletion failed' &&
         createPortal(
           <InfoModal
             message={`Что-то пошло не так... \n
                       Цель "${props.title}" не была удалена.
                       Попробуйте позже еще раз.`}
-            result={props.deletionResult}
+            result={response}
             closeModal={() => setInfoModalOpen(false)}
           />,
           document.body
@@ -59,7 +68,7 @@ const Goal = (props) => {
         />
         <div className="goal-card__content-wrapper">
           <div className="goal-card__info-wrapper">
-            <Link to={"/goalPage/" + props.id} className="goal-card__link">
+            <Link to={"/goalPage/" + props.id} className="goal-card__link" onClick={localStorage.removeItem('pixels')}>
               <h3>{props.title}</h3>
             </Link>
             <p className="goal-card__progress">

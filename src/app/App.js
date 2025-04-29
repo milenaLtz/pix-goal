@@ -12,8 +12,8 @@ function App() {
         <Routes>
           <Route path='/' element={<HomePage/>}/>
           <Route path='/homePage' element={<HomePage/>}/>
-          <Route path='/goalPage/1' element={<GoalPage/>}/>
-          <Route path="/goalPage/:id" component={<GoalPage/>} />
+          {/* <Route path='/goalPage/1' element={<GoalPage/>}/> */}
+          <Route path="/goalPage/:id" element={<GoalPage/>} />
         </Routes>
       </Router>
     </>

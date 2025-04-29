@@ -1,6 +1,6 @@
 import './_introduction.scss';
 import avatar from '../../../shared/icons/icons8-avatar-96 1.svg';
-import cake from '../../../shared/icons/illustration/cake.svg';
+import cat from '../../../shared/icons/illustration//cat.svg';
 
 const Introduction = (props) => {
 
@@ -9,7 +9,7 @@ const Introduction = (props) => {
       <section className='main-page__introduction introduction'>
         {
           props.page === 'goal' ? (
-            <img className='introduction__image' src={cake} alt='аватар пользователя' width={135} height={115}/>
+            <img className='introduction__image' src={cat} alt='аватар пользователя' width={135} height={115}/>
           ) : (
             <img className='introduction__image' src={avatar} alt='аватар пользователя' width={135} height={115}/>
           )

@@ -1,0 +1,26 @@
+.input {
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 250px;
+  height: 35px;
+  min-height: 35px;
+  border-radius: 5px;
+  border: 1px solid rgba($color: #666178, $alpha: 0.5);
+  // margin-bottom: 30px;
+  padding: 0 30px;
+
+  &:active.input--error-message,
+  &:focus.input--error-message {
+    outline: 3px solid tomato;
+  }
+
+  @media (max-width: 1440px) {
+    width: 100%;
+  }
+
+  @media (max-width: 768px) {
+    width: 100%;
+    min-height: 50px;
+    padding: 0 10px;
+  }
+}

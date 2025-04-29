@@ -1,77 +1,34 @@
-import cake from '../../../shared/icons/illustration/cake.svg';
 import cat from '../../../shared/icons/illustration/cat.svg';
-import car from '../../../shared/icons/illustration/car.svg';
-import rabbit from '../../../shared/icons/illustration/rabbit.svg';
-import heart from '../../../shared/icons/illustration/heart.svg';
 import { useState, useEffect } from "react";
+import { createPortal } from "react-dom";
 import { Goal } from "../../../entities/goal";
 import getGoals from '../api/getGoals';
+import { GoalFormModal } from '../../modals';
+import getPixelIcon from '../../../shared/utils/getPixelIcon';
 
 
 const Goals = () => {
+
+    const [goalFormOpen, setGoalFormOpen] = useState(false);
 
     const [goals, setGoals] = useState([]);
     useEffect(() => {
       getGoals(setGoals)
     }, []);
 
-    console.log(goals)
+    // console.log(goals, goalFormOpen);
 
-    const GOALS = [
-      {
-        id: 1,
-        title: "Научиться выпекать",
-        freePixels: 387,
-        image: cake,
-        description: "Развить навык выпекания тортов и пирогов.",
-        progress: "50%",
-        date: "2024-12-01",
-        deletionResult: "success",
-      },
-      {
-        id: 2,
-        title: "Получить кошку",
-        freePixels: 500,
-        image: cat,
-        description: "Завести домашнего питомца, ухаживать за ним.",
-        progress: "20%",
-        date: "2024-11-15",
-        deletionResult: "fail",
-      },
-      {
-        id: 3,
-        title: "Покупка автомобиля",
-        freePixels: 150,
-        image: car,
-        description: "Накопить деньги на покупку нового автомобиля.",
-        progress: "80%",
-        date: "2024-08-10",
-        deletionResult: "success",
-      },
-      {
-        id: 4,
-        title: "Путешествие",
-        freePixels: 700,
-        image: rabbit,
-        description: "Посетить несколько стран и открыть для себя новые культуры.",
-        progress: "30%",
-        date: "2024-09-05",
-        deletionResult: "success",
-      },
-      {
-        id: 5,
-        title: "Здоровое сердце",
-        freePixels: 120,
-        image: heart,
-        description: "Заняться спортом и следить за своим здоровьем.",
-        progress: "60%",
-        date: "2024-10-01",
-        deletionResult: "success",
-      },
-    ];
+    const handleOpenGoalForm = () => {
+      setGoalFormOpen(!goalFormOpen);
+    }
 
     return(
         <>
+        {goalFormOpen &&
+          createPortal(
+          <GoalFormModal onClose={handleOpenGoalForm}/>,
+          document.body
+        )}
           <section className="main-page__block block goals-block">
             <div className="goals-block__wrapper">
               <div className="goals-block__intro">
@@ -82,16 +39,15 @@ const Goals = () => {
                 </div> */}
               </div>
               <div className="goals-block__cards-wrapper">
-                {GOALS.map(goal => {
+                {goals.map(goal => {
                   return(
-                    <Goal key={goal.id} id={goal.id} title={goal.title} freePixels={goal.freePixels} image={goal.image} deletionResult={goal.deletionResult}/>
+                    <Goal key={goal.id} id={goal.id} title={goal.goalName} freePixels={300} image={getPixelIcon(goal.goalImage || cat)}/>
                   )
                 })}
-                {/* <GoalCard title="Научиться выпекать" freePixels="387" image={cake}/> */}
               </div>
               <div className="goals-block__button-wrapper goals-block__button-wrapper--footer">
                 <button className="goals-block__button goals-block__button--text button">Посмотреть все цели</button>
-                <button className="goals-block__button goals-block__button--text button">+</button>
+                <button className="goals-block__button goals-block__button--text button" onClick={handleOpenGoalForm}>+</button>
               </div>
             </div>
           </section>

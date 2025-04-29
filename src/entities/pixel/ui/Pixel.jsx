@@ -1,9 +1,8 @@
 import { useState, useEffect } from "react";
+import editPixels from "../api/editPixels";
 
 const Pixel = (props) => {
   const [color, setColor] = useState(props.selectedPixel.color);
-  console.log(props.selectedPixel.color)
-  console.log(color)
 
   useEffect(() => {
     setColor(props.selectedPixel.color);
@@ -15,8 +14,26 @@ const Pixel = (props) => {
     props.onUpdatePixelColor(props.selectedPixel.id, newColor);
   };
 
-  // fetch taskInfo
-  //post pixel
+
+  const editPixelData = (evt) => {
+    evt.preventDefault();
+
+    const storedPixels = localStorage.getItem('pixels');
+
+    if (!storedPixels) return;
+
+    const updatedPixelEntity = {
+      ...props.pixelEntity,
+      pixelData: storedPixels
+    };
+
+    editPixels(updatedPixelEntity);
+
+    props.setPixelEntity(updatedPixelEntity);
+    props.closeModal();
+  }
+
+  // console.log(props.pixelEntity)
 
   return(
     <>
@@ -68,7 +85,7 @@ const Pixel = (props) => {
               </div>
             </div>
             <div className="pixel-modal__pixel-button-wrapper">
-              <button className="pixel-modal__pixel-button button button--secondary" onClick={props.closeModal}>Сохранить</button>
+              <button type="button" className="pixel-modal__pixel-button button button--secondary" onClick={(evt) => editPixelData(evt)}>Сохранить</button>
             </div>
           </div>
         </div>
