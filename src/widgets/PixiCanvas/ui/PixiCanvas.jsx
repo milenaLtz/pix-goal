@@ -3,7 +3,7 @@ import * as PIXI from 'pixi.js';
 import { v4 as uuidv4 } from 'uuid';
 import getPixels from "../api/getPixels";
 
-const PixiCanvas = forwardRef(({ goalId, setPixelEntity, goalColor, canvasSizeX, canvasSizeY, onOpenModal, showModal, setSelectedPixel, selectedPixel, onCloseModal, onUpdatePixelColor }, ref) => {
+const PixiCanvas = forwardRef(({ goalId, setPixelEntity, goalColor, canvasSizeX, canvasSizeY, onOpenModal, showModal, setSelectedPixel, selectedPixel, taskCompleted, taskDeleted}, ref) => {
 
   // console.log(goalId);
   const gridSize = 10;
@@ -26,8 +26,11 @@ const PixiCanvas = forwardRef(({ goalId, setPixelEntity, goalColor, canvasSizeX,
   // const [selectedPixel, setSelectedPixel] = useState(null);
   // console.log(selectedPixel)
   useEffect(() => {
+    if(taskCompleted || taskDeleted) {
+      getPixels(setPixels, goalId, setPixelEntity);
+    }
     getPixels(setPixels, goalId, setPixelEntity);
-  }, [goalId, setPixelEntity]);
+  }, [goalId, setPixelEntity, taskCompleted, taskDeleted]);
 
   // console.log(pixels, localStorage.getItem('pixels'))
 
@@ -165,14 +168,17 @@ const PixiCanvas = forwardRef(({ goalId, setPixelEntity, goalColor, canvasSizeX,
     pixel.on('pointerupoutside', (event) => onDragEnd(event, id));
     pixel.on('pointermove', (event) => onDragMove(event, id));
 
+    // console.log('newPixel 1', pixel)
     pixelRefs.current[id] = pixel;
+    // console.log('newPixel 2', pixel)
     stage.addChild(pixel);
+    // console.log('newPixel 3', pixel)
     // console.log('add pixel pixels: ', localStorage.getItem('pixels'))
     setPixels((prev) => {
       const existingPixel = prev.find(p => p.id === id);
       if (!existingPixel) {
         console.log('newPixel', pixel)
-        const newPixel = { id, x: pixel?.x, y: pixel?.y, color };
+        const newPixel = { id, x: pixel.x, y: pixel.y, color };
         const updatedPixels = [...prev, newPixel];
         console.log('new updatedPixel: ', updatedPixels)
         localStorage.setItem('pixels', JSON.stringify(updatedPixels));
@@ -242,6 +248,7 @@ const PixiCanvas = forwardRef(({ goalId, setPixelEntity, goalColor, canvasSizeX,
       }
     },
   }));
+
   // console.log(selectedPixel)
 
   // const downloadCanvasImage = () => {

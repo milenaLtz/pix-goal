@@ -9,7 +9,7 @@ const InfoModal = (props) => {
   return (
     <>
       <div className="modal">
-        <div className={`modal__container ${result === 'goal deleted successful' ? "modal__container--success" : "modal__container--fail"}`}>
+        <div className={`modal__container ${result === 'goal deleted successful' || result === 'task deleted successful' ? "modal__container--success" : "modal__container--fail"}`}>
           <p className="modal__info">{message}</p>
           <button className="modal__button button button--modal" onClick={closeModal}>Закрыть</button>
         </div>

@@ -2,6 +2,7 @@ import Input from '../../../shared/ui/Input/ui/Input';
 import { useState } from 'react';
 import addTask from '../api/addTask';
 import './_goal-form.scss';
+import { v4 as uuidv4 } from 'uuid';
 
 const TaskAdditionForm = ({ goalId }) => {
 
@@ -17,23 +18,48 @@ const TaskAdditionForm = ({ goalId }) => {
     taskStatus: "0"
   })
 
+  const generatePixels = (count) => {
+    const pixels = [];
+    for (let i = 0; i < count; i++) {
+      pixels.push({
+        id: uuidv4(),
+        x: 0, // начальные координаты
+        y: 0,
+        color: "#DBD4E6", // цвет по умолчанию
+        taskId: null // будет установлено при сохранении
+      });
+    }
+    return JSON.stringify(pixels);
+  };
+
   const handleInputChange = (event) => {
     const { name, value } = event.target;
+
     setTaskData((prevData) => ({
       ...prevData,
       [name]: value,
     }))
   };
 
-  const createGoal = () => {
-    addTask(setResponse, taskData);
+  const createTask = (evt) => {
+    evt.preventDefault();
+
+    const pixelsCount = parseInt(taskData.numberOfPixels) || 0;
+    const generatedPixels = generatePixels(pixelsCount);
+
+    const taskWithPixels = {
+      ...taskData,
+      taskImage: generatedPixels
+    };
+
+    addTask(setResponse, taskWithPixels);
   };
 
   console.log(JSON.stringify(taskData), response)
 
   return(
     <>
-      <form className="goal-form" onSubmit={createGoal}>
+      <form className="goal-form" onSubmit={(evt) => createTask(evt)}>
       <div className='goal-form__input-wrapper'>
         <label className='goal-form__label'>Название задачи*</label>
         <Input

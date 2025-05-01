@@ -1,5 +1,7 @@
+import apiConfig from '../../../apiConfig.json'
+
 const getUsers = (setUser) => {
-  fetch('http://80.90.189.80:8080/BackendForPixel/api/users', {
+  fetch(`${apiConfig.BASE_URL}BackendForPixel/api/users`, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json'

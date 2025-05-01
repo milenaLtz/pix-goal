@@ -17,6 +17,8 @@ const GoalPage = () => {
   const [pixelEntity, setPixelEntity] = useState({});
   const [showModal, setShowModal] = useState(false);
   const [selectedPixel, setSelectedPixel] = useState(null);
+  const [taskCompleted, setTaskCompleted] = useState(false);
+  const [taskDeleted, setTaskDeleted] = useState(false);
   const canvasRef = useRef(null);
 
   useEffect(() => {
@@ -56,28 +58,37 @@ const GoalPage = () => {
           <main className='main-page'>
             <Introduction page="goal" greetings={goal.goalName} description={goal.goalDescription}/>
             <PixiCanvas
-            goalId={id}
-            setPixelEntity={setPixelEntity}
-            goalColor={goal.goalColor}
-            canvasSizeX={goal.canvasSizeX}
-            canvasSizeY={goal.canvasSizeY}
-            onOpenModal={handleOpenModal}
-            onCloseModal={handleCloseModal}
-            showModal={showModal}
-            setSelectedPixel={setSelectedPixel}
-            selectedPixel={selectedPixel}
-            ref={canvasRef}
+              goalId={id}
+              setPixelEntity={setPixelEntity}
+              goalColor={goal.goalColor}
+              canvasSizeX={goal.canvasSizeX}
+              canvasSizeY={goal.canvasSizeY}
+              onOpenModal={handleOpenModal}
+              onCloseModal={handleCloseModal}
+              showModal={showModal}
+              setSelectedPixel={setSelectedPixel}
+              selectedPixel={selectedPixel}
+              taskCompleted={taskCompleted}
+              taskDeleted={taskDeleted}
+              ref={canvasRef}
             />
-            <Tasks onAddPixel={handleAddPixel} goalId={id}/>
+            <Tasks
+              onAddPixel={handleAddPixel}
+              goalId={id}
+              setTaskCompleted={setTaskCompleted}
+              taskCompleted={taskCompleted}
+              setTaskDeleted={setTaskDeleted}
+              taskDeleted={taskDeleted}
+            />
             <Goals/>
           </main>
           {showModal && (
             <Pixel
-            pixelEntity={pixelEntity}
-            setPixelEntity={setPixelEntity}
-            selectedPixel={selectedPixel}
-            closeModal={handleCloseModal}
-            onUpdatePixelColor={handleUpdatePixelColor}
+              pixelEntity={pixelEntity}
+              setPixelEntity={setPixelEntity}
+              selectedPixel={selectedPixel}
+              closeModal={handleCloseModal}
+              onUpdatePixelColor={handleUpdatePixelColor}
             />
           )}
         </div>

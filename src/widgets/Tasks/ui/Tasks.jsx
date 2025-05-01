@@ -5,14 +5,17 @@ import { createPortal } from "react-dom";
 import TaskFormModal from "../../modals/ui/TaskFormModal";
 
 
-const Tasks = ({onAddPixel, goalId}) => {
+const Tasks = ({onAddPixel, goalId, setTaskCompleted, taskCompleted, setTaskDeleted, taskDeleted}) => {
 
     const [taskFormOpen, setTaskFormOpen] = useState(false);
 
     const [tasks, setTasks] = useState([]);
     useEffect(() => {
+      if(taskCompleted || taskDeleted) {
+        getTasks(setTasks)
+      }
       getTasks(setTasks)
-    }, []);
+    }, [taskCompleted, taskDeleted]);
 
     const handleOpenTaskForm = () => {
       setTaskFormOpen(!taskFormOpen);
@@ -36,7 +39,15 @@ const Tasks = ({onAddPixel, goalId}) => {
                           {
                             task.goalId === Number(goalId) &&
                             <li key={task.id} className="tasks-block__item">
-                              <Task task={task} title={task.taskName} pixelCount={task.numberOfPixels} taskStatus={task.taskStatus} onAddPixel={() => onAddPixel(task.numberOfPixels)}/>
+                              <Task
+                                task={task}
+                                title={task.taskName}
+                                pixelCount={task.numberOfPixels}
+                                taskStatus={task.taskStatus}
+                                onAddPixel={() => onAddPixel(task.numberOfPixels)}
+                                setTaskCompleted={setTaskCompleted}
+                                setTaskDeleted={setTaskDeleted}
+                              />
                             </li>
                           }
                         </>

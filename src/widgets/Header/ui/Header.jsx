@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import avatar from '../../../shared/icons/icons8-avatar-96 1.svg';
+import avatar from '../../../shared/icons/default-avatar.svg';
 
 
 const Header = () => {

@@ -3,7 +3,7 @@ import { useState } from "react";
 import { DeleteModal, InfoModal } from '../../../widgets/modals';
 import { createPortal } from "react-dom";
 // import getGoal from "../api/getGoal";
-import deleteGoal from "../api/deleteModal";
+import deleteGoal from "../api/deleteGoal";
 
 const Goal = (props) => {
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
