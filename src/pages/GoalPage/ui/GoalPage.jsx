@@ -11,7 +11,7 @@ import getGoal from '../../../entities/goal/api/getGoal';
 import ScrollToTop from '../../../app/ScrollToTop';
 
 
-const GoalPage = () => {
+const GoalPage = ({accessToken}) => {
   const {id} = useParams();
   const [goal, setGoal] = useState({});
   const [pixelEntity, setPixelEntity] = useState({});
@@ -20,6 +20,22 @@ const GoalPage = () => {
   const [taskCompleted, setTaskCompleted] = useState(false);
   const [taskDeleted, setTaskDeleted] = useState(false);
   const canvasRef = useRef(null);
+  const [screenSize, setScreenSize] = useState({
+    width: window.innerWidth,
+    height: window.innerHeight,
+  });
+
+  useEffect(() => {
+    const handleResize = () => {
+      setScreenSize({
+        width: window.innerWidth,
+        height: window.innerHeight,
+      });
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   useEffect(() => {
     getGoal(setGoal, id);
@@ -58,6 +74,7 @@ const GoalPage = () => {
           <main className='main-page'>
             <Introduction page="goal" greetings={goal.goalName} description={goal.goalDescription}/>
             <PixiCanvas
+              accessToken={accessToken}
               goalId={id}
               setPixelEntity={setPixelEntity}
               goalColor={goal.goalColor}
@@ -72,7 +89,18 @@ const GoalPage = () => {
               taskDeleted={taskDeleted}
               ref={canvasRef}
             />
+            {showModal && (screenSize.width < 1200 || screenSize.height < 650)  && (
+              <Pixel
+                accessToken={accessToken}
+                pixelEntity={pixelEntity}
+                setPixelEntity={setPixelEntity}
+                selectedPixel={selectedPixel}
+                closeModal={handleCloseModal}
+                onUpdatePixelColor={handleUpdatePixelColor}
+              />
+            )}
             <Tasks
+              accessToken={accessToken}
               onAddPixel={handleAddPixel}
               goalId={id}
               setTaskCompleted={setTaskCompleted}
@@ -80,10 +108,11 @@ const GoalPage = () => {
               setTaskDeleted={setTaskDeleted}
               taskDeleted={taskDeleted}
             />
-            <Goals/>
+            <Goals accessToken={accessToken} />
           </main>
-          {showModal && (
+          {showModal && screenSize.height >= 650 && screenSize.width >= 1200 && (
             <Pixel
+              accessToken={accessToken}
               pixelEntity={pixelEntity}
               setPixelEntity={setPixelEntity}
               selectedPixel={selectedPixel}

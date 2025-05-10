@@ -7,6 +7,7 @@
   gap: 40px;
 
   &__input-wrapper {
+    position: relative;
     width: 45%;
 
     @media (max-width: $tablet-width) {
@@ -16,6 +17,20 @@
     &--flex {
       display: flex;
       flex-wrap: wrap;
+      justify-content: space-evenly;
+
+      &-sizes {
+        justify-content: flex-start;
+
+        & .input {
+          width: 100px;
+          padding: 0 10px;
+
+          &:first-child {
+            margin-right: 20px;
+          }
+        }
+      }
     }
   }
 
@@ -40,5 +55,86 @@
 
   &__button-list {
     display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  &__image-button {
+    position: relative;
+    display: block;
+    width: 40px;
+    height: 40px;
+    background-color: #787488;
+    border: 1px solid rgba($color: #666178, $alpha: 0.5);
+    border-radius: 5px;
+
+    &:hover {
+      background-color: rgba($color: #787488, $alpha: 0.4);
+    }
+
+    &:active,
+    &:focus {
+      background-color: rgba($color: #ffffff, $alpha: 0.6);
+    }
+
+    &::after {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 35px;
+      height: 35px;
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: 90%;
+      content: "";
+    }
+
+    &--cat::after {
+      background-image: url('../../../shared/icons/illustration/cat.svg');
+    }
+
+    &--rabbit::after {
+      background-image: url('../../../shared/icons/illustration/rabbit.svg');
+    }
+
+    &--cake::after {
+      background-image: url('../../../shared/icons/illustration/cake.svg');
+    }
+
+    &--heart::after {
+      background-image: url('../../../shared/icons/illustration/heart.svg');
+    }
+
+    &--car::after {
+      background-image: url('../../../shared/icons/illustration/car.svg');
+    }
+  }
+
+  & .input {
+    max-width: 250px;
+  }
+
+  &__textarea {
+    width: 70%;
+    height: 80px;
+    font-family: $primary-font;
+    border-radius: 5px;
+    border: none;
+    outline: 2px solid rgba($color: #666178, $alpha: 0.5);
+    padding: 10px 20px;
+  }
+
+  &__error {
+    position: absolute;
+    bottom: -23px;
+    margin: 0;
+    color: #F9B090;
+    font-size: 13px;
+  }
+
+  &__button {
+    padding: 10px 20px;
+    font-size: 20px;
   }
 }

@@ -5,7 +5,6 @@ import getPixels from "../api/getPixels";
 
 const PixiCanvas = forwardRef(({ goalId, setPixelEntity, goalColor, canvasSizeX, canvasSizeY, onOpenModal, showModal, setSelectedPixel, selectedPixel, taskCompleted, taskDeleted}, ref) => {
 
-  // console.log(goalId);
   const gridSize = 10;
 
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
@@ -23,8 +22,7 @@ const PixiCanvas = forwardRef(({ goalId, setPixelEntity, goalColor, canvasSizeX,
   const appRef = useRef(null);
   const pixelRefs = useRef({});
   const [pixels, setPixels] = useState([]);
-  // const [selectedPixel, setSelectedPixel] = useState(null);
-  // console.log(selectedPixel)
+
   useEffect(() => {
     if(taskCompleted || taskDeleted) {
       getPixels(setPixels, goalId, setPixelEntity);
@@ -32,37 +30,32 @@ const PixiCanvas = forwardRef(({ goalId, setPixelEntity, goalColor, canvasSizeX,
     getPixels(setPixels, goalId, setPixelEntity);
   }, [goalId, setPixelEntity, taskCompleted, taskDeleted]);
 
-  // console.log(pixels, localStorage.getItem('pixels'))
 
   const drawGrid = (stage, gridSize) => {
     const grid = new PIXI.Graphics();
     grid.lineStyle(1, 0xeeeeee, 1);
 
-    for (let x = 0; x < appRef.current.screen.width; x += gridSize) {
+    const width = canvasSizeX * gridSize;
+    const height = canvasSizeY * gridSize;
+
+    for (let x = 0; x <= width; x += gridSize) {
       grid.moveTo(x, 0);
-      grid.lineTo(x, appRef.current.screen.height);
+      grid.lineTo(x, height);
     }
 
-    for (let y = 0; y < appRef.current.screen.height; y += gridSize) {
+    for (let y = 0; y <= height; y += gridSize) {
       grid.moveTo(0, y);
-      grid.lineTo(appRef.current.screen.width, y);
+      grid.lineTo(width, y);
     }
 
     stage.addChild(grid);
   };
 
   const handlePixelClick = useCallback((id) => {
-    // console.log('pixels before saved: ', pixels)
-    // console.log('pixels before saved: ', localStorage.getItem('pixels'))
     const savedPixels = pixels || JSON.parse(localStorage.getItem('pixels'));
-    // console.log('pixels saved: ', savedPixels)
-    // console.log('pixels saved: ', localStorage.getItem('pixels'))
     const pixelData = savedPixels.find(pixel => pixel.id === id);
-    // console.log('pixels data: ', pixelData)
-    // console.log('pixels data: ', localStorage.getItem('pixels'))
     if (pixelData) {
       setSelectedPixel(pixelData);
-      // console.log('pixels data 2: ', localStorage.getItem('pixels'))
     }
 
     if(showModal === false) {
@@ -79,7 +72,6 @@ const PixiCanvas = forwardRef(({ goalId, setPixelEntity, goalColor, canvasSizeX,
     pixel.dragData = event.data;
     pixel.dragging = true;
     pixel.alpha = 0.5;
-    // console.log('pixels data drag start: ', localStorage.getItem('pixels'))
   };
 
   const onDragMove = (event, id) => {
@@ -95,7 +87,7 @@ const PixiCanvas = forwardRef(({ goalId, setPixelEntity, goalColor, canvasSizeX,
       pixel.x = Math.round(newPosition.x / gridSize) * gridSize;
       pixel.y = Math.round(newPosition.y / gridSize) * gridSize;
     }
-    // console.log('pixels data drag move: ', localStorage.getItem('pixels'))
+
   };
 
   const onDragEnd = useCallback((event, id) => {
@@ -110,33 +102,40 @@ const PixiCanvas = forwardRef(({ goalId, setPixelEntity, goalColor, canvasSizeX,
       const updatedPixels = prev.map((p) =>
         p.id === id ? { ...p, ...newPosition } : p
       );
-      // console.log('dragEnd pixels: ', updatedPixels, localStorage.getItem('pixels'))
+
       localStorage.setItem('pixels', JSON.stringify(updatedPixels));
-      // console.log('dragEnd 2 pixels: ', updatedPixels, localStorage.getItem('pixels'))
+
       return updatedPixels;
     });
-    // console.log('dragEnd 3 pixels: ', localStorage.getItem('pixels'))
-    handlePixelClick(id);
-    // console.log('dragEnd 4 pixels: ', localStorage.getItem('pixels'))
-  },[handlePixelClick]);
 
+    handlePixelClick(id);
+  },[handlePixelClick]);
 
 
 
   useEffect(() => {
     if (appRef.current) return;
-    const width = isMobile ? 300 : (canvasSizeX * gridSize);
-    const height = isMobile ? 250 : (canvasSizeY * gridSize);
+    const baseWidth = canvasSizeX * gridSize;
+    const baseHeight = canvasSizeY * gridSize;
+    const width = isMobile ? 300 : baseWidth;
+    const height = isMobile ? Math.round(300 * (baseHeight / baseWidth)) : baseHeight;
+    const scaleX = width / baseWidth;
+    const scaleY = height / baseHeight;
+    const scale = Math.min(scaleX, scaleY);
     const bgColor = goalColor?.replace('#', '0x');
 
     const app = new PIXI.Application({
       width,
       height,
       backgroundColor: parseInt(bgColor),
+      resolution: window.devicePixelRatio || 1,
+      autoDensity: true,
     });
 
     pixiContainer.current.appendChild(app.view);
     appRef.current = app;
+
+    app.stage.scale.set(scale);
 
     drawGrid(app.stage, gridSize);
 
@@ -148,9 +147,6 @@ const PixiCanvas = forwardRef(({ goalId, setPixelEntity, goalColor, canvasSizeX,
     };
   // eslint-disable-next-line
   }, [goalColor, canvasSizeX, canvasSizeY, isMobile]);
-
-
-
 
 
   const addPixel = useCallback((stage, x = 0, y = 0, color = '#DBD4E6', id = uuidv4()) => {
@@ -168,30 +164,11 @@ const PixiCanvas = forwardRef(({ goalId, setPixelEntity, goalColor, canvasSizeX,
     pixel.on('pointerupoutside', (event) => onDragEnd(event, id));
     pixel.on('pointermove', (event) => onDragMove(event, id));
 
-    // console.log('newPixel 1', pixel)
+
     pixelRefs.current[id] = pixel;
-    // console.log('newPixel 2', pixel)
     stage.addChild(pixel);
-    // console.log('newPixel 3', pixel)
-    // console.log('add pixel pixels: ', localStorage.getItem('pixels'))
-    setPixels((prev) => {
-      const existingPixel = prev.find(p => p.id === id);
-      if (!existingPixel) {
-        console.log('newPixel', pixel)
-        const newPixel = { id, x: pixel.x, y: pixel.y, color };
-        const updatedPixels = [...prev, newPixel];
-        console.log('new updatedPixel: ', updatedPixels)
-        localStorage.setItem('pixels', JSON.stringify(updatedPixels));
-        // console.log('add pixel 3 pixels: ', localStorage.getItem('pixels'))
-        return updatedPixels;
-      }
-      return prev;
-    });
-    // console.log('add pixel 2 pixels: ', localStorage.getItem('pixels'))
     // eslint-disable-next-line
   }, [onDragEnd]);
-
-
 
 
   useEffect(() => {
@@ -199,7 +176,7 @@ const PixiCanvas = forwardRef(({ goalId, setPixelEntity, goalColor, canvasSizeX,
 
     const stage = appRef.current.stage;
     localStorage.setItem('pixels', JSON.stringify(pixels));
-    // console.log('pixels in second useEffect', pixels, localStorage.getItem('pixels'))
+
     Object.values(pixelRefs.current).forEach(pixel => {
       stage.removeChild(pixel);
       pixel.destroy();
@@ -224,18 +201,12 @@ const PixiCanvas = forwardRef(({ goalId, setPixelEntity, goalColor, canvasSizeX,
       addPixel(appRef.current.stage, x, y, color);
     },
     updatePixelColor: (pixelId, newColor) => {
-      // console.log('New color:', newColor);
-      // console.log('pixels update color', pixels, localStorage.getItem('pixels'))
       const updatedPixels = pixels.map((pixel) =>
         pixel.id === pixelId ? { ...pixel, color: newColor } : pixel
       );
       setPixels(updatedPixels);
-      // console.log('updatedPixels in updateing color: ',updatedPixels)
+
       localStorage.setItem('pixels', JSON.stringify(updatedPixels));
-      // const app = appRef.current;
-      // const graphics = appRef.current.stage.children.find(
-      //   (child) => child.pixelId === pixelId
-      // );
 
       const pixelGraphic = pixelRefs.current[pixelId];
       if (pixelGraphic) {
@@ -248,25 +219,6 @@ const PixiCanvas = forwardRef(({ goalId, setPixelEntity, goalColor, canvasSizeX,
       }
     },
   }));
-
-  // console.log(selectedPixel)
-
-  // const downloadCanvasImage = () => {
-  //   if (!appRef.current) {
-  //     console.error('PIXI app is not initialized');
-  //     return;
-  //   }
-
-  //   const canvas = appRef.current.view;
-  //   const dataURL = canvas.toDataURL('image/png');
-
-  //   const link = document.createElement('a');
-  //   link.href = dataURL;
-  //   link.download = 'my-canvas.png';
-  //   document.body.appendChild(link);
-  //   link.click();
-  //   document.body.removeChild(link);
-  // };
 
   return (
     <>

@@ -2,6 +2,7 @@ import doneTaskCheck from "../utils/doneTaskCheck"
 import apiConfig from '../../../apiConfig.json'
 
 const setTaskDone = (taskData) => {
+  console.log(doneTaskCheck(taskData))
   fetch(`${apiConfig.BASE_URL}BackendForPixel/api/tasks`, {
     method: 'PUT',
     headers: {

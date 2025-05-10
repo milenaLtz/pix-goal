@@ -11,11 +11,11 @@ const addTask = (setResponse, taskData) => {
   })
     .then((response) => {
       if (!response.ok) {
-        setResponse('goal addition failed')
+        setResponse('task addition failed')
       }
 
       if(response.ok) {
-        setResponse('goal addition successful')
+        setResponse('task addition successful')
       }})
     .catch((error) => console.error('Error fetching users:', error));
 }

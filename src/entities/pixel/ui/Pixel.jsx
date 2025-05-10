@@ -1,8 +1,10 @@
 import { useState, useEffect } from "react";
 import editPixels from "../api/editPixels";
+import getTaskData from "../api/getTaskData";
 
 const Pixel = (props) => {
   const [color, setColor] = useState(props.selectedPixel.color);
+  const [task, setTask] = useState({});
 
   useEffect(() => {
     setColor(props.selectedPixel.color);
@@ -33,7 +35,11 @@ const Pixel = (props) => {
     props.closeModal();
   }
 
-  // console.log(props.pixelEntity)
+  useEffect(() => {
+    getTaskData(setTask, props.selectedPixel.taskId)
+  }, [setTask, props.selectedPixel.taskId])
+
+  console.log(task)
 
   return(
     <>
@@ -41,23 +47,23 @@ const Pixel = (props) => {
         <div className="pixel-modal__content">
           <div className="pixel-modal__content-wrapper">
             <div className="pixel-modal__task-info task-info">
-              <h2 className="task-info__title">Прочитать рецепты</h2>
+              <h2 className="task-info__title">{task.taskName}</h2>
               <dl className="task-info__list">
                 <div className="task-info__item">
                   <dt className="task-info__topic">Описание</dt>
-                  <dd className="task-info__description">Надо прочитать рецепты про испечение маффинов и капкейков. Лучше всего рецепты из разных источников. </dd>
+                  <dd className="task-info__description">{task.taskDescription}</dd>
                 </div>
                 <div className="task-info__item">
                   <dt className="task-info__topic">Сделано за</dt>
-                  <dd className="task-info__description">5 д 7 ч 35 м</dd>
+                  <dd className="task-info__description">-</dd>
                 </div>
                 <div className="task-info__item">
                   <dt className="task-info__topic">Дата начала</dt>
-                  <dd className="task-info__description">12.04.2024</dd>
+                  <dd className="task-info__description">{task.dateOfStart}</dd>
                 </div>
                 <div className="task-info__item">
                   <dt className="task-info__topic">Дата испольнения</dt>
-                  <dd className="task-info__description">17.04.2024</dd>
+                  <dd className="task-info__description">{task.dateOfStart}</dd>
                 </div>
               </dl>
             </div>
@@ -85,7 +91,7 @@ const Pixel = (props) => {
               </div>
             </div>
             <div className="pixel-modal__pixel-button-wrapper">
-              <button type="button" className="pixel-modal__pixel-button button button--secondary" onClick={(evt) => editPixelData(evt)}>Сохранить</button>
+              <button type="button" className="pixel-modal__pixel-button button button--primary" onClick={(evt) => editPixelData(evt)}>Сохранить</button>
             </div>
           </div>
         </div>

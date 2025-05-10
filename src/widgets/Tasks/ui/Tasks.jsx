@@ -43,7 +43,7 @@ const Tasks = ({onAddPixel, goalId, setTaskCompleted, taskCompleted, setTaskDele
                                 task={task}
                                 title={task.taskName}
                                 pixelCount={task.numberOfPixels}
-                                taskStatus={task.taskStatus}
+                                status={task.status}
                                 onAddPixel={() => onAddPixel(task.numberOfPixels)}
                                 setTaskCompleted={setTaskCompleted}
                                 setTaskDeleted={setTaskDeleted}
@@ -56,7 +56,7 @@ const Tasks = ({onAddPixel, goalId, setTaskCompleted, taskCompleted, setTaskDele
                   }
               </ul>
               <div className="tasks-block__button-wrapper">
-                <button className="tasks_block__button tasks_block__button--text button" onClick={handleOpenTaskForm}>+</button>
+                <button className="tasks-block__button tasks-block__button--text button" onClick={handleOpenTaskForm}></button>
               </div>
             </div>
           </section>

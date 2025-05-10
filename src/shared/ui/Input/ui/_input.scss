@@ -1,17 +1,20 @@
 .input {
   box-sizing: border-box;
   width: 100%;
-  max-width: 250px;
   height: 35px;
   min-height: 35px;
   border-radius: 5px;
-  border: 1px solid rgba($color: #666178, $alpha: 0.5);
-  // margin-bottom: 30px;
+  border: none;
+  outline: 2px solid rgba($color: #666178, $alpha: 0.5);
   padding: 0 30px;
+
+  &--error-message {
+    outline: 2px solid #FFCAB3;
+  }
 
   &:active.input--error-message,
   &:focus.input--error-message {
-    outline: 3px solid tomato;
+    outline: 2px solid #FFCAB3;
   }
 
   @media (max-width: 1440px) {

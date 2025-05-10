@@ -1,10 +1,11 @@
 import apiConfig from '../../../apiConfig.json'
 
-const getGoals = (setGoals) => {
+const getGoals = (setGoals, accessToken) => {
   fetch(`${apiConfig.BASE_URL}BackendForPixel/api/goals`, {
     method: 'GET',
     headers: {
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
+      'Autorization': `Bearer ${accessToken}`
     }
   })
   .then((response) => response.json())

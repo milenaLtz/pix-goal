@@ -1,8 +1,19 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import avatar from '../../../shared/icons/default-avatar.svg';
+import './_header.scss';
 
 
 const Header = () => {
+
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+      localStorage.removeItem('token');
+      navigate('/sign-in');
+      window.location.reload();
+  }
+
+
     return(
         <>
             <header className="header">
@@ -12,8 +23,9 @@ const Header = () => {
                         <button className="header__button button">Создать</button>
                     </div>
                     <Link className="header__link" to="/homePage">
-                      <img src={avatar} alt="sample" width={25} height={25}/>
+                      <img src={avatar} alt="sample" width={35} height={35}/>
                     </Link>
+                    <button onClick={handleLogout}>выйти</button>
                 </div>
             </header>
         </>

@@ -22,11 +22,19 @@
   justify-content: right;
 }
 
-.tasks_block__button {
+.tasks-block__button {
   margin-right: 20px;
 }
 
-.tasks_block__button--text {
+.tasks-block__button:last-child {
+  padding: 15px;
+  background-image: url("../../shared/icons/plus.svg");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 40%;
+}
+
+.tasks-block__button--text {
   padding: 5px 10px;
   font-size: 12px;
   text-align: center;

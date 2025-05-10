@@ -38,13 +38,20 @@
   display: block;
   margin: 0;
   padding: 12px 12px;
-  height: 25px;
 }
 
 .goals-block__button:first-child {
   margin-right: 10px;
 }
 
+.goals-block__button:last-child {
+  padding: 15px;
+  background-image: url("../../shared/icons/plus.svg");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 40%;
+}
+
 .goals-block__button--text {
-  padding: 5px 10px;
+  padding: 7px 10px;
 }

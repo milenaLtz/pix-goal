@@ -2,8 +2,9 @@ import { Link } from "react-router-dom";
 import { useState } from "react";
 import { DeleteModal, InfoModal } from '../../../widgets/modals';
 import { createPortal } from "react-dom";
-// import getGoal from "../api/getGoal";
 import deleteGoal from "../api/deleteGoal";
+import getPixelWord from "../../task/utils/getPixelWord";
+
 
 const Goal = (props) => {
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
@@ -12,16 +13,13 @@ const Goal = (props) => {
 
   const handleDeleteModalOpen = () => {
     setDeleteModalOpen(true);
-    // console.log("deleteMode", deleteModalOpen);
   };
 
   const handleDeleteGoal = () => {
-    deleteGoal(setResponse, props.id);
+    deleteGoal(setResponse, props.id, props.accessToken);
     setDeleteModalOpen(false);
     setInfoModalOpen(true);
   };
-
-  // console.log(response, props.image);
 
   return (
     <>
@@ -72,7 +70,7 @@ const Goal = (props) => {
               <h3>{props.title}</h3>
             </Link>
             <p className="goal-card__progress">
-              {props.freePixels} пикселей свободны
+              {props.freePixels} {getPixelWord(props.freePixels)} свободны
             </p>
           </div>
           <button

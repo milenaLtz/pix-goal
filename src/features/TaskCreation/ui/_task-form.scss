@@ -1,6 +1,6 @@
 @use '../../../shared/styles/common/variables' as *;
 
-.goal-form {
+.task-form {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
@@ -40,5 +40,32 @@
 
   &__button-list {
     display: flex;
+  }
+
+  & .input {
+    max-width: 250px;
+  }
+
+  &__textarea {
+    width: 70%;
+    height: 80px;
+    font-family: $primary-font;
+    border-radius: 5px;
+    border: none;
+    outline: 2px solid rgba($color: #666178, $alpha: 0.5);
+    padding: 10px 20px;
+  }
+
+  &__error {
+    position: absolute;
+    bottom: -23px;
+    margin: 0;
+    color: #F9B090;
+    font-size: 13px;
+  }
+
+  &__button {
+    padding: 10px 20px;
+    font-size: 20px;
   }
 }

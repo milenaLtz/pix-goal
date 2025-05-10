@@ -1,5 +1,5 @@
 const doneTaskCheck = (taskData) => {
-  const doneTask = {...taskData, taskStatus: '1'};
+  const doneTask = {...taskData, status: 'DONE'};
   return doneTask
 }
 export default doneTaskCheck;

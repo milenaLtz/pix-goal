@@ -7,13 +7,30 @@
     border: 1px solid #9390A1;
     border-radius: 5px;
     box-shadow: 0 2px 4px 0 rgba(101, 96, 121, 0.25);
+    text-decoration: none;
     cursor: pointer;
 }
 
+.button:hover {
+  opacity: 0.8;
+}
+
+.button:active,
+.button:focus {
+  opacity: 0.6;
+}
+
+.button--primary {
+  color: #ffffff;
+  background-color: #9390A1;
+  border: none;
+}
+
 .button--secondary {
-    color: #ffffff;
-    background-color: #9390A1;
+    color: #484455;
+    background-color: #ffffff;
     border: none;
+    opacity: 0.5;
 }
 
 .button--modal {

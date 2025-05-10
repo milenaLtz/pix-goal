@@ -1,23 +1,20 @@
 .canvas-container {
-    // width: 100%;
     display: flex;
-    // justify-content: center;
 }
 
 .pixi-canvas {
     display: flex;
     justify-content: center;
-    // max-width: 1000px;
-    // min-height: 500px;+
     margin: 20px auto;
     margin-top: 20px;
     padding: 20px 0;
 }
 
-// .pixi-canvas canvas {
-//   width: 80%; /* Масштабируется по ширине */
-//   height: auto;
-// }
+/*.pixi-canvas canvas {
+  width: 80%;
+  height: auto;
+}*/
+
 
 .pixi-canvas__button-wrapper {
     display: flex;

@@ -1,11 +1,14 @@
 import apiConfig from '../../../apiConfig.json'
 
-const addPixelData = async (pixelData, setResponsePixels) => {
+const addPixelData = async (pixelData, setResponsePixels, accessToken) => {
   console.log(pixelData)
   try {
   const response = await fetch(`${apiConfig.BASE_URL}BackendForPixel/api/pixels`, {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorizations': `Bearer ${accessToken}`
+     },
     body: JSON.stringify(pixelData)
   });
 

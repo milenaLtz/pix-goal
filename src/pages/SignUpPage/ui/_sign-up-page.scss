@@ -1,0 +1,17 @@
+.sign-up-page {
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 40px 130px;
+  }
+
+  &__link {
+    text-decoration: none;
+  }
+
+  &__form-wrapper {
+    display: flex;
+    justify-content: center;
+  }
+}

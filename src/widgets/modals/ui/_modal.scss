@@ -15,6 +15,7 @@
   overflow: auto;
 
   &__container {
+    position: relative;
     min-width: 300px;
     max-width: 900px;
     min-height: 100px;
@@ -72,6 +73,15 @@
   &__button-close {
     position: absolute;
     top: 20px;
+    right: 20px;
+    width: 40px;
+    height: 40px;
+    background-color: transparent;
+    background-image: url("../../../shared/icons/cross-white.svg");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 70%;
+    border: none;
   }
 
 }

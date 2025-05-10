@@ -1,11 +1,16 @@
 .pixel-modal {
-  // position: relative;
-  // top: 0;
   display: flex;
   justify-content: center;
   margin-left: 40px;
   padding-top: 55px;
   border-left: 1px solid #D8D4E0;
+
+  @media (max-height: 649px), (max-width: 1200px) {
+    display: flex;
+    margin: auto;
+    padding: 55px 0;
+    border: none;
+  }
 }
 
 .pixel-modal__content {
@@ -15,16 +20,35 @@
   width: 400px;
   padding: 20px 50px;
   background-color: #F1EEF5;
+
+  @media (max-height: 649px), (max-width: 1200px) {
+    display: block;
+    width: 70%;
+    max-width: 800px;
+    padding: 40px;
+    border-radius: 10px;
+  }
 }
 
 .pixel-modal__content-wrapper {
   position: fixed;
+
+  @media (max-height: 649px), (max-width: 1200px) {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+  }
 }
 
 .pixel-modal__pixel-info {
   margin: 20px 30px;
   background-color: #D5D2DC;
   border-radius: 10px;
+
+  @media (max-height: 649px), (max-width: 1200px) {
+    align-self: center;
+    max-width: 400px;
+  }
 }
 
 .pixel-modal__pixel-button-wrapper {

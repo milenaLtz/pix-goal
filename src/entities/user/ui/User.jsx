@@ -3,14 +3,31 @@ import './_user-block.scss'
 import getUsers from "../api/getUsers";
 
 
-const User = () => {
+const User = (props) => {
   const [user, setUser] = useState([]);
+  const currentUserEmail = localStorage.getItem('currentUserEmail');
+  const [currentUser, setCurrentUser] = useState({});
 
   useEffect(() => {
-    getUsers(setUser);
-  }, []);
+    getUsers((fetchedUsers) => {
+      setUser(fetchedUsers);
 
-  console.log(user[2])
+      const currentUser = fetchedUsers.find(u => u.email === currentUserEmail);
+      if (currentUser) {
+        setCurrentUser(currentUser);
+        props.setUserName(currentUser.userName);
+        props.setUserId(currentUser.id);
+      }
+    }, props.accessToken);
+  }, [currentUserEmail, props]);
+
+  useEffect(() => {
+    if(user.length !== 0) {
+      props.setUserName(currentUser.userName)
+      props.setUserId(currentUser.id)
+    }
+  })
+  console.log(currentUser)
 
   return(
       <>
@@ -20,35 +37,35 @@ const User = () => {
               <div className="user-block__item">
                 <dt className="user-block__item-title">Имя пользоателя</dt>
                 {
-                  user.length >=1 && <dd className="user-block__item-description">{user[2].userName} {user[2].userSurname}</dd>
+                  user.length >=1 && <dd className="user-block__item-description">{currentUser.userName} {currentUser.userSurname}</dd>
                 }
               </div>
               <div className="user-block__item">
                 <dt className="user-block__item-title">Электронная почта</dt>
                 {
-                  user.length >=1 && <dd className="user-block__item-description">{user[2].email}</dd>
+                  user.length >=1 && <dd className="user-block__item-description">{currentUser.email}</dd>
                 }
               </div>
               <div className="user-block__item">
                 <dt className="user-block__item-title">Количество целей</dt>
                 {
-                  user.length >=1 && <dd className="user-block__item-description">{user[2].goalNumber}</dd>
+                  user.length >=1 && <dd className="user-block__item-description">{currentUser.goalNumber}</dd>
                 }
               </div>
               <div className="user-block__item">
                 <dt className="user-block__item-title">Общий процент достижения</dt>
                 {
-                  user.length >=1 && <dd className="user-block__item-description">{user[2].goalNumber / user[2].goalNumber * 100}%</dd>
+                  user.length >=1 && <dd className="user-block__item-description">{currentUser.goalNumber / currentUser.goalNumber * 100}%</dd>
                 }
               </div>
               <div className="user-block__item">
                 <dt className="user-block__item-title">Достигнутые цели</dt>
                 {
-                  user.length >=1 && <dd className="user-block__item-description">{user[2].goalNumber}</dd>
+                  user.length >=1 && <dd className="user-block__item-description">{currentUser.goalNumber}</dd>
                 }
               </div>
               <div>
-                <button className="user-block__button button button--secondary">Изменить</button>
+                <button className="user-block__button button button--primary">Изменить</button>
               </div>
             </dl>
           </div>
