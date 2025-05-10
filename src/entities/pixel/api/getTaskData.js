@@ -1,10 +1,11 @@
 import apiConfig from '../../../apiConfig.json'
 
-const getTaskData = (setTask, id) => {
+const getTaskData = (setTask, id, accessToken) => {
   fetch(`${apiConfig.BASE_URL}BackendForPixel/api/tasks/${id}`, {
     method: 'GET',
     headers: {
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${accessToken}`
     }
   })
   .then((response) => response.json())

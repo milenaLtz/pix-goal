@@ -6,7 +6,7 @@ const addGoal = (setResponse, taskData, setPixelData, accessToken) => {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      'Authorizations': `Bearer ${accessToken}`
+      'Authorization': `Bearer ${accessToken}`
     },
     body: JSON.stringify(taskData)
   })

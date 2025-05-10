@@ -1,11 +1,12 @@
 import apiConfig from '../../../apiConfig.json'
 import undoneTask from '../utils/undoneTask'
 
-const setTaskUndone = (taskData) => {
+const setTaskUndone = (taskData, accessToken) => {
   fetch(`${apiConfig.BASE_URL}BackendForPixel/api/tasks`, {
     method: 'PUT',
     headers: {
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${accessToken}`
     },
     body: JSON.stringify(undoneTask(taskData))
   })

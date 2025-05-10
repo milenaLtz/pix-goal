@@ -1,12 +1,13 @@
 import apiConfig from '../../../apiConfig.json'
 
-const getPixelsForTask = async (goalId) => {
+const getPixelsForTask = async (goalId, accessToken) => {
   console.log(goalId)
   try {
     const response = await fetch(`${apiConfig.BASE_URL}BackendForPixel/api/pixels`, {
       method: 'GET',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${accessToken}`
       }
     });
 

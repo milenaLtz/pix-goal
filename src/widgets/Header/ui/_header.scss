@@ -5,6 +5,12 @@
   min-height: 50px;
   background-color: #F1EEF5;
   border-bottom: 1px solid #D8D4E0;
+
+  &__user-info-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
 }
 
 .header-wrapper {

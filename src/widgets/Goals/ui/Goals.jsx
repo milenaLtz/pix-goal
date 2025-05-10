@@ -14,12 +14,12 @@ const Goals = (props) => {
 
     const [goals, setGoals] = useState([]);
     useEffect(() => {
-      getGoals(setGoals, props.accessToken)
-    }, [props.accessToken]);
+      getGoals(setGoals, props.accessToken, props.userId)
+    }, [props.accessToken, props.userId]);
 
     console.log(goals, goalFormOpen);
 
-    const handleOpenGoalForm = (userId) => {
+    const handleOpenGoalForm = () => {
       setGoalFormOpen(!goalFormOpen);
     }
 
@@ -40,7 +40,7 @@ const Goals = (props) => {
                 </div> */}
               </div>
               <div className="goals-block__cards-wrapper">
-                {(showAllGoals || goals.length < 4 ? goals : goals.slice(0, 4)).map(goal =>
+                {(showAllGoals || goals.length < 4 ? goals : goals.slice(0, 4)).map((goal, index) =>
                   {
                     console.log(props.userId, goal.userId)
                     return (
@@ -49,7 +49,7 @@ const Goals = (props) => {
                         props.userId === goal.userId &&
                         <Goal
                           accessToken={props.accessToken}
-                          key={goal.id}
+                          key={index}
                           id={goal.id}
                           title={goal.goalName}
                           freePixels={goal.freePixels}

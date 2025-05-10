@@ -5,17 +5,17 @@ import { createPortal } from "react-dom";
 import TaskFormModal from "../../modals/ui/TaskFormModal";
 
 
-const Tasks = ({onAddPixel, goalId, setTaskCompleted, taskCompleted, setTaskDeleted, taskDeleted}) => {
+const Tasks = ({ accessToken, onAddPixel, goalId, setTaskCompleted, taskCompleted, setTaskDeleted, taskDeleted}) => {
 
     const [taskFormOpen, setTaskFormOpen] = useState(false);
 
     const [tasks, setTasks] = useState([]);
     useEffect(() => {
       if(taskCompleted || taskDeleted) {
-        getTasks(setTasks)
+        getTasks(setTasks, accessToken)
       }
-      getTasks(setTasks)
-    }, [taskCompleted, taskDeleted]);
+      getTasks(setTasks, accessToken)
+    }, [taskCompleted, taskDeleted, accessToken]);
 
     const handleOpenTaskForm = () => {
       setTaskFormOpen(!taskFormOpen);
@@ -25,7 +25,7 @@ const Tasks = ({onAddPixel, goalId, setTaskCompleted, taskCompleted, setTaskDele
         <>
         {taskFormOpen &&
           createPortal(
-          <TaskFormModal onClose={handleOpenTaskForm} goalId={goalId}/>,
+          <TaskFormModal onClose={handleOpenTaskForm} goalId={goalId} accessToken={accessToken}/>,
           document.body
         )}
           <section className="main-page__block block tasks-block">
@@ -40,6 +40,7 @@ const Tasks = ({onAddPixel, goalId, setTaskCompleted, taskCompleted, setTaskDele
                             task.goalId === Number(goalId) &&
                             <li key={task.id} className="tasks-block__item">
                               <Task
+                                accessToken={accessToken}
                                 task={task}
                                 title={task.taskName}
                                 pixelCount={task.numberOfPixels}

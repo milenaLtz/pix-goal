@@ -27,7 +27,7 @@ const User = (props) => {
       props.setUserId(currentUser.id)
     }
   })
-  console.log(currentUser)
+  console.log(currentUser.id)
 
   return(
       <>

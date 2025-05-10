@@ -9,6 +9,7 @@ import { Header } from '../../../widgets/Header';
 import { Footer } from '../../../widgets/Footer';
 import getGoal from '../../../entities/goal/api/getGoal';
 import ScrollToTop from '../../../app/ScrollToTop';
+import getUsers from '../../../entities/user/api/getUsers';
 
 
 const GoalPage = ({accessToken}) => {
@@ -24,6 +25,20 @@ const GoalPage = ({accessToken}) => {
     width: window.innerWidth,
     height: window.innerHeight,
   });
+  const currentUserEmail = localStorage.getItem('currentUserEmail');
+  //eslint-disable-next-line
+  const [users, setUsers] = useState([]);
+  const [userId, setUserId] = useState(0);
+  useEffect(() => {
+    getUsers((fetchedUsers) => {
+      setUsers(fetchedUsers);
+
+      const currentUser = fetchedUsers.find(u => u.email === currentUserEmail);
+      if (currentUser) {
+        setUserId(currentUser.id);
+      }
+    }, accessToken);
+  }, [currentUserEmail, accessToken]);
 
   useEffect(() => {
     const handleResize = () => {
@@ -38,8 +53,8 @@ const GoalPage = ({accessToken}) => {
   }, []);
 
   useEffect(() => {
-    getGoal(setGoal, id);
-  }, [id])
+    getGoal(setGoal, id, accessToken);
+  }, [id, accessToken])
 
 
   const handleOpenModal = (pixel) => {
@@ -108,7 +123,7 @@ const GoalPage = ({accessToken}) => {
               setTaskDeleted={setTaskDeleted}
               taskDeleted={taskDeleted}
             />
-            <Goals accessToken={accessToken} />
+            <Goals userId={userId} accessToken={accessToken} />
           </main>
           {showModal && screenSize.height >= 650 && screenSize.width >= 1200 && (
             <Pixel

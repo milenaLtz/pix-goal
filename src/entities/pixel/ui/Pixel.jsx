@@ -29,15 +29,15 @@ const Pixel = (props) => {
       pixelData: storedPixels
     };
 
-    editPixels(updatedPixelEntity);
+    editPixels(updatedPixelEntity, props.accessToken);
 
     props.setPixelEntity(updatedPixelEntity);
     props.closeModal();
   }
 
   useEffect(() => {
-    getTaskData(setTask, props.selectedPixel.taskId)
-  }, [setTask, props.selectedPixel.taskId])
+    getTaskData(setTask, props.selectedPixel.taskId, props.accessToken)
+  }, [setTask, props.selectedPixel.taskId, props.accessToken])
 
   console.log(task)
 

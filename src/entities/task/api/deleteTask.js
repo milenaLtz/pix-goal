@@ -1,11 +1,12 @@
 import apiConfig from '../../../apiConfig.json'
 
-const deleteTask = (setResponse, id) => {
+const deleteTask = (setResponse, id, accessToken) => {
   console.log(`${apiConfig.BASE_URL}BackendForPixel/api/tasks/${id}`)
   fetch(`${apiConfig.BASE_URL}BackendForPixel/api/tasks/${id}`, {
     method: 'DELETE',
     headers: {
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${accessToken}`
     }
   })
     .then((response) => {

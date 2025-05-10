@@ -22,10 +22,12 @@ const Header = () => {
                         <button className="header__button button button--sibe-bar-toggle"></button>
                         <button className="header__button button">Создать</button>
                     </div>
-                    <Link className="header__link" to="/homePage">
-                      <img src={avatar} alt="sample" width={35} height={35}/>
-                    </Link>
-                    <button onClick={handleLogout}>выйти</button>
+                    <div className="header__user-info-wrapper">
+                      <Link className="header__link" to="/homePage">
+                        <img src={avatar} alt="sample" width={35} height={35}/>
+                      </Link>
+                      <button className="button" onClick={handleLogout}>выйти</button>
+                    </div>
                 </div>
             </header>
         </>

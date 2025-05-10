@@ -1,12 +1,13 @@
 import doneTaskCheck from "../utils/doneTaskCheck"
 import apiConfig from '../../../apiConfig.json'
 
-const setTaskDone = (taskData) => {
+const setTaskDone = (taskData, accessToken) => {
   console.log(doneTaskCheck(taskData))
   fetch(`${apiConfig.BASE_URL}BackendForPixel/api/tasks`, {
     method: 'PUT',
     headers: {
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${accessToken}`
     },
     body: JSON.stringify(doneTaskCheck(taskData))
   })

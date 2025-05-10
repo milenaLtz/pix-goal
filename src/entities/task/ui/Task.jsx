@@ -20,10 +20,10 @@ const Task = (props) => {
     if (isChecked || props.status === 'DONE') return;
 
     try {
-      await setTaskDone(props.task);
+      await setTaskDone(props.task, props.accessToken);
       setIsChecked(true);
 
-      const currentPixels = await getPixelsForTask(props.task?.goalId);
+      const currentPixels = await getPixelsForTask(props.task?.goalId, props.accessToken);
 
       const parsedCurrentPixels = currentPixels.pixelData
         ? JSON.parse(currentPixels.pixelData)
@@ -45,7 +45,7 @@ const Task = (props) => {
         id: currentPixels.id,
         goalId: props.task.goalId,
         pixelData: JSON.stringify(mergedPixels)
-      });
+      }, props.accessToken);
 
       props.setTaskCompleted(true);
 
@@ -65,7 +65,7 @@ const Task = (props) => {
     try {
       const taskId = props.task.id;
       const currentGoalId = props.task.goalId;
-      const currentPixels = await getPixelsForTask(currentGoalId);
+      const currentPixels = await getPixelsForTask(currentGoalId, props.accessToken);
 
       const parsedCurrentPixels = currentPixels.pixelData
         ? JSON.parse(currentPixels.pixelData)
@@ -81,9 +81,9 @@ const Task = (props) => {
         pixelData: JSON.stringify(filteredPixels)
       };
 
-      await deleteTask(setResponse, taskId);
+      await deleteTask(setResponse, taskId, props.accessToken);
 
-      await editPixels(modifiedPixels);
+      await editPixels(modifiedPixels, props.accessToken);
 
       props.setTaskDeleted(true);
       setDeleteModalOpen(false);

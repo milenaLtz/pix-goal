@@ -1,11 +1,12 @@
 import apiConfig from '../../../apiConfig.json'
 
-const editPixels = (newPixelData) => {
+const editPixels = (newPixelData, accessToken) => {
   console.log('newPixelData before sending: ',newPixelData)
   fetch(`${apiConfig.BASE_URL}BackendForPixel/api/pixels`, {
     method: 'PUT',
     headers: {
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${accessToken}`
     },
     body: JSON.stringify(newPixelData)
   })

@@ -3,7 +3,7 @@ import * as PIXI from 'pixi.js';
 import { v4 as uuidv4 } from 'uuid';
 import getPixels from "../api/getPixels";
 
-const PixiCanvas = forwardRef(({ goalId, setPixelEntity, goalColor, canvasSizeX, canvasSizeY, onOpenModal, showModal, setSelectedPixel, selectedPixel, taskCompleted, taskDeleted}, ref) => {
+const PixiCanvas = forwardRef(({ accessToken, goalId, setPixelEntity, goalColor, canvasSizeX, canvasSizeY, onOpenModal, showModal, setSelectedPixel, selectedPixel, taskCompleted, taskDeleted}, ref) => {
 
   const gridSize = 10;
 
@@ -25,10 +25,10 @@ const PixiCanvas = forwardRef(({ goalId, setPixelEntity, goalColor, canvasSizeX,
 
   useEffect(() => {
     if(taskCompleted || taskDeleted) {
-      getPixels(setPixels, goalId, setPixelEntity);
+      getPixels(setPixels, goalId, setPixelEntity, accessToken);
     }
-    getPixels(setPixels, goalId, setPixelEntity);
-  }, [goalId, setPixelEntity, taskCompleted, taskDeleted]);
+    getPixels(setPixels, goalId, setPixelEntity, accessToken);
+  }, [goalId, setPixelEntity, taskCompleted, taskDeleted, accessToken]);
 
 
   const drawGrid = (stage, gridSize) => {
