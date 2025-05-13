@@ -4,6 +4,7 @@ import { DeleteModal, InfoModal } from '../../../widgets/modals';
 import { createPortal } from "react-dom";
 import deleteGoal from "../api/deleteGoal";
 import getPixelWord from "../../task/utils/getPixelWord";
+import './_goal-card.scss';
 
 
 const Goal = (props) => {

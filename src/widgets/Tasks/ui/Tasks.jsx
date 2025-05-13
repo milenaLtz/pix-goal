@@ -3,6 +3,7 @@ import { Task } from "../../../entities/task";
 import getTasks from "../api/getTasks";
 import { createPortal } from "react-dom";
 import TaskFormModal from "../../modals/ui/TaskFormModal";
+import './_tasks-block.scss'
 
 
 const Tasks = ({ accessToken, onAddPixel, goalId, setTaskCompleted, taskCompleted, setTaskDeleted, taskDeleted}) => {

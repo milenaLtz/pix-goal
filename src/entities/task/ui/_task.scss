@@ -58,24 +58,24 @@
 }
 
 .task__button--check::before {
-  background-image: url("../../shared/icons/checkbox-light.svg");
+  background-image: url("../../../shared/icons/checkbox-light.svg");
 }
 
 .task__button--change::before {
-  background-image: url("../../shared/icons/pen-dark.svg");
+  background-image: url("../../../shared/icons/pen-dark.svg");
 }
 
 .task__button--delete::before {
-  background-image: url("../../shared/icons/bin.svg");
+  background-image: url("../../../shared/icons/bin.svg");
   background-size: 45%;
 }
 
 .task__button--checked::before {
-  background-image: url("../../shared/icons/checkbox-dark.svg");
+  background-image: url("../../../shared/icons/checkbox-dark.svg");
 }
 
 .task__button--no-change::before {
-    background-image: url("../../shared/icons/pen-light.svg");
+    background-image: url("../../../shared/icons/pen-light.svg");
 }
 
 .task__button::before:hover {

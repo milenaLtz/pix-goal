@@ -2,6 +2,7 @@ import { useEffect, useRef, useState, useImperativeHandle, forwardRef, useCallba
 import * as PIXI from 'pixi.js';
 import { v4 as uuidv4 } from 'uuid';
 import getPixels from "../api/getPixels";
+import './_pixi-canvas.scss';
 
 const PixiCanvas = forwardRef(({ accessToken, goalId, setPixelEntity, goalColor, canvasSizeX, canvasSizeY, onOpenModal, showModal, setSelectedPixel, selectedPixel, taskCompleted, taskDeleted}, ref) => {
 

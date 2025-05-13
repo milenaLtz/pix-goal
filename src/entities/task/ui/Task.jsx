@@ -6,6 +6,7 @@ import { createPortal } from "react-dom";
 import { DeleteModal, InfoModal } from "../../../widgets/modals";
 import deleteTask from "../api/deleteTask";
 import getPixelWord from "../utils/getPixelWord";
+import './_task.scss';
 
 const Task = (props) => {
   const [isChecked, setIsChecked] = useState(false);

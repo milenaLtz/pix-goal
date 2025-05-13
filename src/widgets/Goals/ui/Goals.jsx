@@ -5,6 +5,7 @@ import { Goal } from "../../../entities/goal";
 import getGoals from '../api/getGoals';
 import { GoalFormModal } from '../../modals';
 import getPixelIcon from '../../../shared/utils/getPixelIcon';
+import './_goals-block.scss';
 
 
 const Goals = (props) => {
@@ -42,11 +43,9 @@ const Goals = (props) => {
               <div className="goals-block__cards-wrapper">
                 {(showAllGoals || goals.length < 4 ? goals : goals.slice(0, 4)).map((goal, index) =>
                   {
-                    console.log(props.userId, goal.userId)
                     return (
                       <>
                       {
-                        props.userId === goal.userId &&
                         <Goal
                           accessToken={props.accessToken}
                           key={index}

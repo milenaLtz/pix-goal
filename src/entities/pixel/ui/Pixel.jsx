@@ -1,6 +1,9 @@
 import { useState, useEffect } from "react";
 import editPixels from "../api/editPixels";
 import getTaskData from "../api/getTaskData";
+import './_pixel-info.scss';
+import './_pixel-modal.scss';
+import './_task-info.scss';
 
 const Pixel = (props) => {
   const [color, setColor] = useState(props.selectedPixel.color);

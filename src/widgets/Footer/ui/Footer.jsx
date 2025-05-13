@@ -1,3 +1,5 @@
+import './_page-footer.scss';
+
 const Footer = () => {
   return(
     <>
