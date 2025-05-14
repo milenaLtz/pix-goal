@@ -9,6 +9,11 @@
   border-radius: 5px;
   box-shadow: 0 2px 4px 0 rgba($color: #000000, $alpha: 0.25);
 
+  @media (max-width: 768px) {
+    width: 100%;
+    padding: 40px 25px 50px;
+  }
+
   &__input-wrapper {
     position: relative;
     display: flex;
@@ -18,7 +23,7 @@
 
   &__label {
     margin-bottom: 10px;
-    font-size: 16px;
+    font-size: 20px;
     color: #ffffff;
   }
 

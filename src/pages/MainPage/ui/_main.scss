@@ -10,6 +10,12 @@
     align-items: center;
     max-width: 1440px;
     padding: 40px 130px;
+
+    @media (max-width: 768px) {
+      width: 100%;
+      min-width: 320px;
+      padding: 20px 15px;
+    }
   }
 
   &__link {
@@ -17,6 +23,10 @@
 
     & h1 {
       font-size: 50px;
+
+      @media (max-width: 768px) {
+        font-size: 30px;
+      }
     }
 
     &--auth:first-child {
@@ -33,6 +43,11 @@
     max-width: 1440px;
     margin: 0 auto;
     margin-top: 100px;
+
+    @media (max-width: 768px) {
+      margin-top: 40px;
+      font-size: 20px;
+    }
   }
 
   &__introduction,
@@ -46,12 +61,22 @@
     max-width: 350px;
     margin-bottom: 150px;
     margin-left: 100px;
+
+    @media (max-width: 768px) {
+      margin: 0;
+      font-size: 20px;
+    }
   }
 
   &__description {
     max-width: 400px;
     margin-left: 250px;
     text-align: right;
+
+    @media (max-width: 768px) {
+      margin: 0;
+      font-size: 20px;
+    }
   }
 
   &__deco1 {

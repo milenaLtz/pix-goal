@@ -4,6 +4,10 @@
     justify-content: space-between;
     align-items: center;
     padding: 40px 130px;
+
+    @media (max-width: 768px) {
+      padding: 20px 15px;
+    }
   }
 
   &__link {
