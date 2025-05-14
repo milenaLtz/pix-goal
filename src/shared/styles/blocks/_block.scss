@@ -1,9 +1,13 @@
 .block {
-  width: 70%;
+  width: 100%;
   max-width: 800px;
   min-height: 100px;
   margin-bottom: 80px;
   background-color: #ffffff;
   border-radius: 10px;
   box-shadow: 0 10px 25px 0 rgba(101, 96, 121, 0.25);
+
+  @media (max-width: 768px) {
+    width: 100%;
+  }
 }
