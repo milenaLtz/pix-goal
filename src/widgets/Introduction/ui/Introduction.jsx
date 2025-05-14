@@ -9,9 +9,9 @@ const Introduction = (props) => {
       <section className='main-page__introduction introduction'>
         {
           props.page === 'goal' ? (
-            <img className='introduction__image' src={cat} alt='аватар пользователя' width={135} height={115}/>
+            <img className='introduction__image' src={cat} alt='аватар пользователя'/>
           ) : (
-            <img className='introduction__image' src={avatar} alt='аватар пользователя' width={135} height={115}/>
+            <img className='introduction__image' src={avatar} alt='аватар пользователя'/>
           )
         }
         <div className='introduction__content-wrapper'>

@@ -1,3 +1,8 @@
+.user-block__wrapper {
+  display: flex;
+  justify-content: center;
+}
+
 .user-block__list {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
@@ -9,8 +14,9 @@
     grid-template-columns: 1fr 1fr;
   }
 
-  @media (max-width: 320px) {
+  @media (max-width: 600px) {
     grid-template-columns: 1fr;
+    align-items: center;
   }
 }
 

@@ -19,8 +19,8 @@ const Header = () => {
             <header className="header">
                 <div className="header-wrapper">
                     <div className="header__button-wrapper">
-                        <button className="header__button button button--sibe-bar-toggle"></button>
-                        <button className="header__button button">Создать</button>
+                        {/* <button className="header__button button button--sibe-bar-toggle"></button> */}
+                        {/* <button className="header__button button">Создать</button> */}
                     </div>
                     <div className="header__user-info-wrapper">
                       <Link className="header__link" to="/homePage">

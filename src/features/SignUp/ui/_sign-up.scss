@@ -42,7 +42,7 @@
     cursor: pointer;
 
     @media (max-width: 768px) {
-      top: 40px;
+      top: 32px;
       right: 5px;
     }
 
@@ -68,6 +68,9 @@
     }
   }
 
+  &__button {
+    font-size: 20px;
+  }
 
   &__error-message {
     margin: 0;
