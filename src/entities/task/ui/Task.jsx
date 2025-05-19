@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import setTaskDone from "../api/setTaskDone";
 import editPixels from "../../pixel/api/editPixels";
 import getPixelsForTask from "../api/getPixelsForTask";
@@ -67,7 +67,7 @@ const Task = (props) => {
       const taskId = props.task.id;
       const currentGoalId = props.task.goalId;
       const currentPixels = await getPixelsForTask(currentGoalId, props.accessToken);
-
+      console.log(currentPixels)
       const parsedCurrentPixels = currentPixels.pixelData
         ? JSON.parse(currentPixels.pixelData)
         : [];
@@ -82,21 +82,32 @@ const Task = (props) => {
         pixelData: JSON.stringify(filteredPixels)
       };
 
-      await deleteTask(setResponse, taskId, props.accessToken);
+      await deleteTask(taskId, props.accessToken);
 
       await editPixels(modifiedPixels, props.accessToken);
-
-      props.setTaskDeleted(true);
+      console.log(props.refreshTasks)
+      // props.refreshTasks()
+      setResponse('task deleted successful');
+      console.log(response)
+      console.log('task deleted')
       setDeleteModalOpen(false);
-      setInfoModalOpen(true);
+      console.log('modal closed')
+      // setInfoModalOpen(true);
     } catch (error) {
       console.error('Error deleting task:', error);
-      response('task deletion failed');
+      // response('task deletion failed');
+      setResponse('task deletion failed');
+      setDeleteModalOpen(false);
       setInfoModalOpen(true);
     }
   }
 
-
+  useEffect(() => {
+    if (response === 'task deleted successful' || response === 'task deletion failed') {
+      setInfoModalOpen(true);
+      console.log('info modal opened')
+    }
+  }, [response]);
 
   return(
       <>
@@ -105,7 +116,10 @@ const Task = (props) => {
           <DeleteModal
             message={`Вы действительно хотите удалить задачу: "${props.title}"?`}
             action={handleDeleteTask}
-            closeModal={() => setDeleteModalOpen(false)}
+            closeModal={() => {
+              props.setTaskDeleted(true);
+              setDeleteModalOpen(false);
+            }}
           />,
           document.body
         )}
@@ -117,8 +131,9 @@ const Task = (props) => {
                       Задача "${props.title}"  была успешно удалена.`}
             result={response}
             closeModal={() => {
+              props.setTaskDeleted(true);
+              props.refreshTasks()
               setInfoModalOpen(false)
-              window.location.reload();
             }}
           />,
           document.body

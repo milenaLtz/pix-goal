@@ -5,6 +5,7 @@ import getPixels from "../api/getPixels";
 import './_pixi-canvas.scss';
 
 const PixiCanvas = forwardRef(({ accessToken, goalId, setPixelEntity, goalColor, canvasSizeX, canvasSizeY, onOpenModal, showModal, setSelectedPixel, selectedPixel, taskCompleted, taskDeleted}, ref) => {
+  const [isLoading, setIsLoading] = useState(true);
 
   const gridSize = 10;
 
@@ -25,10 +26,13 @@ const PixiCanvas = forwardRef(({ accessToken, goalId, setPixelEntity, goalColor,
   const [pixels, setPixels] = useState([]);
 
   useEffect(() => {
+    setIsLoading(true);
     if(taskCompleted || taskDeleted) {
       getPixels(setPixels, goalId, setPixelEntity, accessToken);
+      setIsLoading(false);
     }
     getPixels(setPixels, goalId, setPixelEntity, accessToken);
+    setIsLoading(false);
   }, [goalId, setPixelEntity, taskCompleted, taskDeleted, accessToken]);
 
 
@@ -115,7 +119,7 @@ const PixiCanvas = forwardRef(({ accessToken, goalId, setPixelEntity, goalColor,
 
 
   useEffect(() => {
-    if (appRef.current) return;
+    if (appRef.current || !pixiContainer.current) return;
     const baseWidth = canvasSizeX * gridSize;
     const baseHeight = canvasSizeY * gridSize;
     const width = isMobile ? 300 : baseWidth;
@@ -221,10 +225,39 @@ const PixiCanvas = forwardRef(({ accessToken, goalId, setPixelEntity, goalColor,
     },
   }));
 
+  const [zoomLevel, setZoomLevel] = useState(1);
+  const zoomIn = () => {
+    if (!appRef.current) return;
+    const newZoom = Math.min(zoomLevel + 0.1, 3); // максимальный масштаб — x3
+    appRef.current.stage.scale.set(newZoom);
+    setZoomLevel(newZoom);
+  };
+
+  const zoomOut = () => {
+    if (!appRef.current) return;
+    const newZoom = Math.max(zoomLevel - 0.1, 0.3); // минимальный масштаб — x0.3
+    appRef.current.stage.scale.set(newZoom);
+    setZoomLevel(newZoom);
+  };
+
   return (
     <>
       <div className="canvas-container">
-        <div className="pixi-canvas block" ref={pixiContainer}></div>
+      <div>
+      {isLoading && (
+        <div className="loading-spinner" style={{height: `${canvasSizeY}`}}>
+          <div className="spinner" />
+        </div>
+      )}
+      <div
+        className={`pixi-canvas block ${isLoading ? 'hidden' : ''}`}
+        ref={pixiContainer}
+      />
+      <div className="pixi-canvas__button-wrapper">
+        <button className="pixi-canvas__button button" onClick={zoomIn}>+</button>
+        <button className="pixi-canvas__button button" onClick={zoomOut}>-</button>
+      </div>
+      </div>
       </div>
       <div>
       </div>

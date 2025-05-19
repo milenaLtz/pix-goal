@@ -18,17 +18,25 @@ const Goals = (props) => {
       getGoals(setGoals, props.accessToken, props.userId)
     }, [props.accessToken, props.userId]);
 
-    console.log(goals, goalFormOpen);
-
     const handleOpenGoalForm = () => {
       setGoalFormOpen(!goalFormOpen);
     }
+
+    const refreshGoals = () => {
+      getGoals(setGoals, props.accessToken, props.userId)
+    }
+
 
     return(
         <>
         {goalFormOpen &&
           createPortal(
-          <GoalFormModal onClose={handleOpenGoalForm} userId={props.userId} accessToken={props.accessToken}/>,
+          <GoalFormModal
+            onClose={handleOpenGoalForm}
+            userId={props.userId}
+            accessToken={props.accessToken}
+            refreshGoals={refreshGoals}
+          />,
           document.body
         )}
           <section className="main-page__block block goals-block">
@@ -53,6 +61,7 @@ const Goals = (props) => {
                           title={goal.goalName}
                           freePixels={goal.freePixels}
                           image={getPixelIcon(goal.goalImage || cat)}
+                          refreshGoals={refreshGoals}
                         />
                       }
                       </>
@@ -62,12 +71,15 @@ const Goals = (props) => {
                 )}
               </div>
               <div className="goals-block__button-wrapper goals-block__button-wrapper--footer">
-                <button
-                  className="goals-block__button goals-block__button--text button"
-                  onClick={() => setShowAllGoals(!showAllGoals)}
-                >
-                  {showAllGoals ? "Скрыть цели" : "Посмотреть все цели"}
-                </button>
+                {
+                  goals.length > 4 &&
+                  <button
+                    className="goals-block__button goals-block__button--text button"
+                    onClick={() => setShowAllGoals(!showAllGoals)}
+                  >
+                    {showAllGoals ? "Скрыть цели" : "Посмотреть все цели"}
+                  </button>
+                }
                 <button className="goals-block__button goals-block__button--text button" onClick={handleOpenGoalForm}></button>
               </div>
             </div>

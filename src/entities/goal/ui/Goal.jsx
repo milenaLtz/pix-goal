@@ -21,7 +21,6 @@ const Goal = (props) => {
     setDeleteModalOpen(false);
     setInfoModalOpen(true);
   };
-
   return (
     <>
       {deleteModalOpen &&
@@ -41,8 +40,8 @@ const Goal = (props) => {
                       Цель "${props.title}"  была успешно удалена.`}
             result={response}
             closeModal={() => {
+              props.refreshGoals();
               setInfoModalOpen(false)
-              window.location.reload();
             }}
           />,
           document.body

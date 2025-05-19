@@ -8,7 +8,12 @@ const GoalFormModal = (props) => {
         <div className="modal__container">
           <h2 className="modal__title">Новая цель</h2>
           <button className="modal__button-close" onClick={props.onClose}></button>
-          <GoalAdditionForm onClose={props.onClose} userId={props.userId} accessToken={props.accessToken}/>
+          <GoalAdditionForm
+            onClose={props.onClose}
+            userId={props.userId}
+            accessToken={props.accessToken}
+            refreshGoals={props.refreshGoals}
+          />
         </div>
       </div>
     </>

@@ -12,21 +12,27 @@ const Tasks = ({ accessToken, onAddPixel, goalId, setTaskCompleted, taskComplete
 
     const [tasks, setTasks] = useState([]);
     useEffect(() => {
-      if(taskCompleted || taskDeleted) {
-        getTasks(setTasks, accessToken)
-      }
-      getTasks(setTasks, accessToken)
-    }, [taskCompleted, taskDeleted, accessToken]);
+      getTasks(setTasks, accessToken);
+    }, [taskCompleted, accessToken]);
 
     const handleOpenTaskForm = () => {
       setTaskFormOpen(!taskFormOpen);
     }
 
+    const refreshTasks = () => {
+      getTasks(setTasks, accessToken);
+    };
+
     return(
         <>
         {taskFormOpen &&
           createPortal(
-          <TaskFormModal onClose={handleOpenTaskForm} goalId={goalId} accessToken={accessToken}/>,
+          <TaskFormModal
+            onClose={handleOpenTaskForm}
+            goalId={goalId}
+            accessToken={accessToken}
+            refreshTasks={refreshTasks}
+          />,
           document.body
         )}
           <section className="main-page__block block tasks-block">
@@ -49,6 +55,7 @@ const Tasks = ({ accessToken, onAddPixel, goalId, setTaskCompleted, taskComplete
                                 onAddPixel={() => onAddPixel(task.numberOfPixels)}
                                 setTaskCompleted={setTaskCompleted}
                                 setTaskDeleted={setTaskDeleted}
+                                refreshTasks={refreshTasks}
                               />
                             </li>
                           }

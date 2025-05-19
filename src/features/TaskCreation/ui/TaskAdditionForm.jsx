@@ -4,7 +4,7 @@ import addTask from '../api/addTask';
 import './_task-form.scss';
 import { v4 as uuidv4 } from 'uuid';
 
-const TaskAdditionForm = ({ goalId, onClose, accessToken }) => {
+const TaskAdditionForm = ({ goalId, onClose, accessToken, refreshTasks }) => {
 
   const [response, setResponse] = useState('');
   const [taskData, setTaskData] = useState({
@@ -66,6 +66,7 @@ const TaskAdditionForm = ({ goalId, onClose, accessToken }) => {
   useEffect(() => {
     if(response === 'task addition successful') {
       onClose()
+      refreshTasks()
     }
   })
 

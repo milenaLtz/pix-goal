@@ -57,6 +57,7 @@ const GoalAdditionForm = (props) => {
   useEffect(() => {
     if (response === 'goal addition successful' && pixelData.goalId !== 0) {
       addPixelData(pixelData, setResponsePixels, props.accessToken);
+      props.refreshGoals();
       props.onClose();
     }
   }, [pixelData, response, props])
