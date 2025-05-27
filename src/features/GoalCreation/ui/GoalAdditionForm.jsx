@@ -7,7 +7,7 @@ import addPixelData from '../api/addPixelData';
 const GoalAdditionForm = (props) => {
 
   const [response, setResponse] = useState('');
-  const [goalData, setgoalData] = useState({
+  const [goalData, setGoalData] = useState({
     userId: props.userId,
     goalName: "",
     goalDescription: "",
@@ -30,14 +30,14 @@ const GoalAdditionForm = (props) => {
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
-    setgoalData((prevData) => ({
+    setGoalData((prevData) => ({
       ...prevData,
       [name]: value,
     }))
   };
 
   const handleImageSelect = (image) => {
-    setgoalData((prevData) => ({
+    setGoalData((prevData) => ({
       ...prevData,
       goalImage: image,
     }));
@@ -157,7 +157,7 @@ const GoalAdditionForm = (props) => {
         <div className='goal-form__input-wrapper'>
           <label className='goal-form__label'>Выбрать декоративное изображение*</label>
           <ul className='goal-form__button-list'>
-            {['cat', 'rabbit', 'cake', 'heart', 'car'].map((image, index) => (
+            {['books', 'flower-park', 'flower', 'heart2', 'money'].map((image, index) => (
               <li key={index}>
                 <button className={`goal-form__image-button goal-form__image-button--${image}`} type="button" onClick={() => handleImageSelect(image)}>
                 </button>

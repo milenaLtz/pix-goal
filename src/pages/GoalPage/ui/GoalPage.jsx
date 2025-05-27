@@ -87,7 +87,15 @@ const GoalPage = ({accessToken}) => {
         <Header/>
         <div className='main-page__wrapper'>
           <main className='main-page'>
-            <Introduction page="goal" greetings={goal.goalName} description={goal.goalDescription}/>
+            <Introduction
+              page="goal"
+              greetings={goal.goalName}
+              description={goal.goalDescription}
+              image={goal.goalImage}
+              color={goal.goalColor}
+              canvasSizeX={goal.canvasSizeX}
+              canvasSizeY={goal.canvasSizeY}
+            />
             <PixiCanvas
               accessToken={accessToken}
               goalId={id}

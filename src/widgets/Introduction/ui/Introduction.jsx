@@ -1,15 +1,36 @@
 import './_introduction.scss';
 import avatar from '../../../shared/icons/default-avatar.svg';
 import cat from '../../../shared/icons/illustration//cat.svg';
+import getPixelIcon from '../../../shared/utils/getPixelIcon';
+import { useState } from 'react';
+import GoalInfoModal from '../../modals/ui/GoalInfoModal';
 
 const Introduction = (props) => {
 
+  const [isGoalInfoModalOpen, setIsGoalInfoModalOpen] = useState();
+
+  const toggleGoalInfoModal = () => {
+    setIsGoalInfoModalOpen(!isGoalInfoModalOpen);
+  }
+
   return(
     <>
+      {
+        isGoalInfoModalOpen &&
+        <GoalInfoModal
+          title={props.greetings}
+          description={props.description}
+          image={getPixelIcon(props.image || cat)}
+          onClose={toggleGoalInfoModal}
+          color={props.color}
+          canvasSizeX={props.canvasSizeX}
+          canvasSizeY={props.canvasSizeY}
+        />
+      }
       <section className='main-page__introduction introduction'>
         {
           props.page === 'goal' ? (
-            <img className='introduction__image' src={cat} alt='аватар пользователя'/>
+            <img className='introduction__image' src={getPixelIcon(props.image || cat)} alt='аватар пользователя'/>
           ) : (
             <img className='introduction__image' src={avatar} alt='аватар пользователя'/>
           )
@@ -20,7 +41,7 @@ const Introduction = (props) => {
             props.page === 'goal' ? (
               <div className='introduction__description-wrapper'>
                 <p className='introduction__description'>{props.description}</p>
-                <button className='introduction__description-button'></button>
+                <button className='introduction__description-button' onClick={toggleGoalInfoModal}></button>
               </div>
             ) : (
               <p className='introduction__description'>{props.description}</p>

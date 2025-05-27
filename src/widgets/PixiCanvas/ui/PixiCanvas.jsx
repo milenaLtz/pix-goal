@@ -164,7 +164,7 @@ const PixiCanvas = forwardRef(({ accessToken, goalId, setPixelEntity, goalColor,
     pixel.cursor = 'pointer';
 
     pixel.on('click',  () => handlePixelClick(id));
-    pixel.on('pointerdown', (event) => onDragStart(event, id));
+    pixel.on('pointerdown', (event) => onDragStart(event, id)) ;
     pixel.on('pointerup', (event) => onDragEnd(event, id));
     pixel.on('pointerupoutside', (event) => onDragEnd(event, id));
     pixel.on('pointermove', (event) => onDragMove(event, id));

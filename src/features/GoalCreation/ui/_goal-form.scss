@@ -62,8 +62,8 @@
   &__image-button {
     position: relative;
     display: block;
-    width: 40px;
-    height: 40px;
+    width: 55px;
+    height: 55px;
     background-color: #787488;
     border: 1px solid rgba($color: #666178, $alpha: 0.5);
     border-radius: 5px;
@@ -82,32 +82,32 @@
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
-      width: 35px;
-      height: 35px;
+      width: 50px;
+      height: 50px;
       background-repeat: no-repeat;
       background-position: center;
       background-size: 90%;
       content: "";
     }
 
-    &--cat::after {
-      background-image: url('../../../shared/icons/illustration/cat.svg');
+    &--books::after {
+      background-image: url('../../../shared/icons/illustration/books.png');
     }
 
-    &--rabbit::after {
-      background-image: url('../../../shared/icons/illustration/rabbit.svg');
+    &--flower-park::after {
+      background-image: url('../../../shared/icons/illustration/flower-park.jpg');
     }
 
-    &--cake::after {
-      background-image: url('../../../shared/icons/illustration/cake.svg');
+    &--flower::after {
+      background-image: url('../../../shared/icons/illustration/flower.jpg');
     }
 
-    &--heart::after {
-      background-image: url('../../../shared/icons/illustration/heart.svg');
+    &--heart2::after {
+      background-image: url('../../../shared/icons/illustration/heart2.png');
     }
 
-    &--car::after {
-      background-image: url('../../../shared/icons/illustration/car.svg');
+    &--money::after {
+      background-image: url('../../../shared/icons/illustration/money.jpg');
     }
   }
 
