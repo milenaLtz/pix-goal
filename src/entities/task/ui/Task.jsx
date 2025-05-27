@@ -7,12 +7,14 @@ import { DeleteModal, InfoModal } from "../../../widgets/modals";
 import deleteTask from "../api/deleteTask";
 import getPixelWord from "../utils/getPixelWord";
 import './_task.scss';
+import TaskInfoModal from "../../../widgets/modals/ui/TaskInfoModal";
 
 const Task = (props) => {
   const [isChecked, setIsChecked] = useState(false);
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
   const [response, setResponse] = useState('');
   const [infoModalOpen, setInfoModalOpen] = useState(false);
+  const [isTaskInfoModalOpen, setIsTaskInfoModalOpen] = useState(false);
 
 
   const handleCheckButtonClick = async (event) => {
@@ -54,6 +56,10 @@ const Task = (props) => {
       console.error('Error completing task:', error);
     }
   };
+
+  const toggleTaskInfoModal = () => {
+    setIsTaskInfoModalOpen(!isTaskInfoModalOpen);
+  }
 
   const handleDeleteModalOpen = () => {
     setDeleteModalOpen(true);
@@ -150,6 +156,18 @@ const Task = (props) => {
           />,
           document.body
         )}
+        {
+          isTaskInfoModalOpen &&
+          createPortal(
+          <TaskInfoModal
+            task={props.task}
+            onClose={toggleTaskInfoModal}
+            accessToken={props.accessToken}
+            refreshTasks={props.refreshTasks}
+          />,
+          document.body
+          )
+        }
         <div className={`tasks-block__task task ${isChecked || props.status === 'DONE' ? "task--checked" : ""}`}>
           <div className="task__content-wrapper">
             <h3 className="task__title">{props.title}</h3>
@@ -162,7 +180,11 @@ const Task = (props) => {
               onClick={(event) => handleCheckButtonClick(event)}
               disabled={isChecked || props.status === 'DONE'}
             ></button>
-            <button className={`task__button task__button--change ${isChecked || props.status === 'DONE' ? "task__button--no-change" : ""}`}></button>
+            <button
+              className={`task__button task__button--change ${isChecked || props.status === 'DONE' ? "task__button--no-change" : ""}`}
+              disabled={isChecked || props.status === 'DONE'}
+              onClick={toggleTaskInfoModal}
+            ></button>
             <button
               className="task__button task__button--delete"
               onClick={(event) => handleDeleteModalOpen(event)}

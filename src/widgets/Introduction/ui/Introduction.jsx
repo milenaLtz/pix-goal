@@ -18,6 +18,7 @@ const Introduction = (props) => {
       {
         isGoalInfoModalOpen &&
         <GoalInfoModal
+          goal={props.goal}
           title={props.greetings}
           description={props.description}
           image={getPixelIcon(props.image || cat)}
@@ -25,6 +26,7 @@ const Introduction = (props) => {
           color={props.color}
           canvasSizeX={props.canvasSizeX}
           canvasSizeY={props.canvasSizeY}
+          accessToken={props.accessToken}
         />
       }
       <section className='main-page__introduction introduction'>
@@ -40,7 +42,7 @@ const Introduction = (props) => {
           {
             props.page === 'goal' ? (
               <div className='introduction__description-wrapper'>
-                <p className='introduction__description'>{props.description}</p>
+                <p className='introduction__description'>Подробная информация</p>
                 <button className='introduction__description-button' onClick={toggleGoalInfoModal}></button>
               </div>
             ) : (

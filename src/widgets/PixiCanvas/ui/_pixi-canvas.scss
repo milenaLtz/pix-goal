@@ -1,14 +1,44 @@
+@use '../../../shared/styles/common/variables' as *;
+
 .canvas-container {
   display: flex;
   justify-content: center;
+  padding: 20px 0;
+}
+
+.canvas-block {
+  padding: 30px 0;
 }
 
 .pixi-canvas {
   display: flex;
-  justify-content: center;
-  margin: 20px auto;
+  max-height: 520px;
+  margin: 0 auto;
   margin-top: 20px;
-  padding: 20px 0;
+  overflow: auto;
+
+  &--small {
+    justify-content: center;
+  }
+
+  &::-webkit-scrollbar {
+    width: 15px;
+    background: $light-violet;
+    border-radius: 5px;
+    border: 1px solid #D8D4E0;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    width: 10px;
+    background: $light-grey;
+    border-radius: 5px;
+    border: 3px solid transparent;
+    background-clip: padding-box;
+  }
+
+  &::-webkit-scrollbar-corner {
+    display: none;
+  }
 }
 
 .pixi-canvas.hidden {
@@ -16,19 +46,23 @@
 }
 
 .pixi-canvas__button-wrapper {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-top: 40px;
+  display: flex;
+  justify-content: right;
+  align-items: center;
+  margin-top: 40px;
+  padding: 0 50px;
 }
 
 .pixi-canvas__button {
-    margin-top: 0;
-    margin-right: 20px;
+  margin-top: 0;
+  margin-right: 20px;
+  padding: 10px;
+
+  font-size: 25px;
 }
 
 .pixi-canvas__button:last-child {
-    margin-right: 0;
+  margin-right: 0;
 }
 
 .loading-spinner {

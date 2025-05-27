@@ -1,24 +1,24 @@
 import { useEffect, useRef, useState, useImperativeHandle, forwardRef, useCallback } from "react";
 import * as PIXI from 'pixi.js';
 import { v4 as uuidv4 } from 'uuid';
-import getPixels from "../api/getPixels";
 import './_pixi-canvas.scss';
+import getPixels from "../api/getPixels";
 
-const PixiCanvas = forwardRef(({ accessToken, goalId, setPixelEntity, goalColor, canvasSizeX, canvasSizeY, onOpenModal, showModal, setSelectedPixel, selectedPixel, taskCompleted, taskDeleted}, ref) => {
+const PixiCanvas = forwardRef(({ accessToken, goalId, setPixelEntity, goalColor, canvasSizeX, canvasSizeY, onOpenModal, showModal, setSelectedPixel, selectedPixel, taskCompleted, taskDeleted }, ref) => {
   const [isLoading, setIsLoading] = useState(true);
 
-  const gridSize = 10;
+  const gridSize = 20;
 
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
-    useEffect(() => {
-      const handleResize = () => {
-        setIsMobile(window.innerWidth < 768);
-      };
-      window.addEventListener('resize', handleResize);
-      return () => {
-        window.removeEventListener('resize', handleResize);
-      }
-    }, []);
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    window.addEventListener('resize', handleResize);
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    }
+  }, []);
 
   const pixiContainer = useRef(null);
   const appRef = useRef(null);
@@ -27,7 +27,7 @@ const PixiCanvas = forwardRef(({ accessToken, goalId, setPixelEntity, goalColor,
 
   useEffect(() => {
     setIsLoading(true);
-    if(taskCompleted || taskDeleted) {
+    if (taskCompleted || taskDeleted) {
       getPixels(setPixels, goalId, setPixelEntity, accessToken);
       setIsLoading(false);
     }
@@ -63,13 +63,13 @@ const PixiCanvas = forwardRef(({ accessToken, goalId, setPixelEntity, goalColor,
       setSelectedPixel(pixelData);
     }
 
-    if(showModal === false) {
+    if (showModal === false) {
       console.log('Открыть модальное окно для пикселя с ID:', id);
       onOpenModal(pixelData);
       setSelectedPixel(pixelData);
     }
 
-  },[onOpenModal, showModal, pixels, setSelectedPixel]);
+  }, [onOpenModal, showModal, pixels, setSelectedPixel]);
 
 
   const onDragStart = (event, id) => {
@@ -114,7 +114,7 @@ const PixiCanvas = forwardRef(({ accessToken, goalId, setPixelEntity, goalColor,
     });
 
     handlePixelClick(id);
-  },[handlePixelClick]);
+  }, [handlePixelClick]);
 
 
 
@@ -150,7 +150,7 @@ const PixiCanvas = forwardRef(({ accessToken, goalId, setPixelEntity, goalColor,
         appRef.current = null;
       }
     };
-  // eslint-disable-next-line
+    // eslint-disable-next-line
   }, [goalColor, canvasSizeX, canvasSizeY, isMobile]);
 
 
@@ -163,8 +163,8 @@ const PixiCanvas = forwardRef(({ accessToken, goalId, setPixelEntity, goalColor,
     pixel.interactive = true;
     pixel.cursor = 'pointer';
 
-    pixel.on('click',  () => handlePixelClick(id));
-    pixel.on('pointerdown', (event) => onDragStart(event, id)) ;
+    pixel.on('click', () => handlePixelClick(id));
+    pixel.on('pointerdown', (event) => onDragStart(event, id));
     pixel.on('pointerup', (event) => onDragEnd(event, id));
     pixel.on('pointerupoutside', (event) => onDragEnd(event, id));
     pixel.on('pointermove', (event) => onDragMove(event, id));
@@ -243,25 +243,22 @@ const PixiCanvas = forwardRef(({ accessToken, goalId, setPixelEntity, goalColor,
   return (
     <>
       <div className="canvas-container">
-      <div>
-      {isLoading && (
-        <div className="loading-spinner" style={{height: `${canvasSizeY}`}}>
-          <div className="spinner" />
+        <div className="canvas-block block">
+          {isLoading && (
+            <div className="loading-spinner" style={{ height: `${canvasSizeY}` }}>
+              <div className="spinner" />
+            </div>
+          )}
+          <div
+            className={`${(canvasSizeX * gridSize) < 800 ? `pixi-canvas pixi-canvas--small ${isLoading ? 'hidden' : ''}` : `pixi-canvas ${isLoading ? 'hidden' : ''}`}`}
+            ref={pixiContainer}
+          />
+          <div className="pixi-canvas__button-wrapper">
+            <button className="pixi-canvas__button button" onClick={zoomIn}>+</button>
+            <button className="pixi-canvas__button button" onClick={zoomOut}>-</button>
+          </div>
         </div>
-      )}
-      <div
-        className={`pixi-canvas block ${isLoading ? 'hidden' : ''}`}
-        ref={pixiContainer}
-      />
-      <div className="pixi-canvas__button-wrapper">
-        <button className="pixi-canvas__button button" onClick={zoomIn}>+</button>
-        <button className="pixi-canvas__button button" onClick={zoomOut}>-</button>
       </div>
-      </div>
-      </div>
-      <div>
-      </div>
-
     </>
   )
 });

@@ -89,12 +89,14 @@ const GoalPage = ({accessToken}) => {
           <main className='main-page'>
             <Introduction
               page="goal"
+              goal={goal}
               greetings={goal.goalName}
-              description={goal.goalDescription}
+              description={goal.description}
               image={goal.goalImage}
               color={goal.goalColor}
               canvasSizeX={goal.canvasSizeX}
               canvasSizeY={goal.canvasSizeY}
+              accessToken={accessToken}
             />
             <PixiCanvas
               accessToken={accessToken}

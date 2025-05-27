@@ -9,6 +9,7 @@ const Header = () => {
 
   const handleLogout = () => {
       localStorage.removeItem('token');
+      localStorage.removeItem('creationTokenDate');
       navigate('/sign-in');
       window.location.reload();
   }
@@ -19,14 +20,14 @@ const Header = () => {
             <header className="header">
                 <div className="header-wrapper">
                     <div className="header__button-wrapper">
-                        {/* <button className="header__button button button--sibe-bar-toggle"></button> */}
-                        {/* <button className="header__button button">Создать</button> */}
+                      {/* <button className="header__button button button--sibe-bar-toggle"></button> */}
+                      {/* <button className="header__button button">Создать</button> */}
                     </div>
                     <div className="header__user-info-wrapper">
                       <Link className="header__link" to="/homePage">
                         <img src={avatar} alt="sample" width={35} height={35}/>
                       </Link>
-                      <button className="button" onClick={handleLogout}>выйти</button>
+                      <button className="button" onClick={handleLogout}>Выйти</button>
                     </div>
                 </div>
             </header>
