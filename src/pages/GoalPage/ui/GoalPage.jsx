@@ -6,13 +6,15 @@ import { Tasks } from '../../../widgets/Tasks';
 import { PixiCanvas } from '../../../widgets/PixiCanvas';
 import { Introduction } from '../../../widgets/Introduction';
 import { Header } from '../../../widgets/Header';
-import { Footer } from '../../../widgets/Footer';
 import getGoal from '../../../entities/goal/api/getGoal';
 import ScrollToTop from '../../../app/ScrollToTop';
 import getUsers from '../../../entities/user/api/getUsers';
 
 
 const GoalPage = ({accessToken}) => {
+  useEffect(() => {
+    localStorage.removeItem('pixels');
+  }, []);
   const {id} = useParams();
   const [goal, setGoal] = useState({});
   const [pixelEntity, setPixelEntity] = useState({});
@@ -146,7 +148,6 @@ const GoalPage = ({accessToken}) => {
             />
           )}
         </div>
-        <Footer/>
         <ScrollToTop/>
       </>
   )

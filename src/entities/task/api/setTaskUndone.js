@@ -2,6 +2,7 @@ import apiConfig from '../../../apiConfig.json'
 import undoneTask from '../utils/undoneTask'
 
 const setTaskUndone = (taskData, accessToken) => {
+
   fetch(`${apiConfig.BASE_URL}BackendForPixel/api/tasks`, {
     method: 'PUT',
     headers: {
@@ -12,11 +13,9 @@ const setTaskUndone = (taskData, accessToken) => {
   })
   .then((response) => {
     if (!response.ok) {
-      console.log('pixelData addition failed')
     }
 
     if(response.ok) {
-      console.log('pixelData addition successful')
       return response;
     }})
   .then((data) => data)

@@ -37,14 +37,10 @@ const TaskInfoModal = (props) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      // Здесь должен быть вызов API для обновления задачи
       await updateTask(taskData, props.accessToken, setResponse);
 
-      // После успешного обновления:
-      console.log('refreshTasks', props.refreshTasks)
       props.refreshTasks();
       props.onClose();
-      // props.onUpdate(taskData); // Передаем обновленные данные в родительский компонент
     } catch (error) {
       console.error('Ошибка при обновлении задачи:', error);
     }
@@ -85,7 +81,7 @@ const TaskInfoModal = (props) => {
                   <div className="modal__content-item">
                     <p className="modal__item-title">Описание задачи</p>
                     <textarea
-                      className="modal__item-value-edit"
+                      className="modal__textarea"
                       name="taskDescription"
                       value={taskData.taskDescription}
                       onChange={handleInputChange}

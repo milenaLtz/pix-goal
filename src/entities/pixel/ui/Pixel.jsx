@@ -42,8 +42,6 @@ const Pixel = (props) => {
     getTaskData(setTask, props.selectedPixel.taskId, props.accessToken)
   }, [setTask, props.selectedPixel.taskId, props.accessToken])
 
-  console.log(task)
-
   return(
     <>
       <div className="pixel-modal">

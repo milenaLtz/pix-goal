@@ -37,22 +37,20 @@ const User = (props) => {
   };
 
   const refreshUser = () => {
-  return new Promise((resolve) => {
-    getUsers((fetchedUsers) => {
-      setUser(fetchedUsers);
+    return new Promise((resolve) => {
+      getUsers((fetchedUsers) => {
+        setUser(fetchedUsers);
 
-      const currentUser = fetchedUsers.find(u => u.email === currentUserEmail);
-      if (currentUser) {
-        setCurrentUser(currentUser);
-        props.setUserName(currentUser.userName);
-        props.setUserId(currentUser.id);
-      }
-      resolve();
-    }, props.accessToken);
-  });
-}
-
-  console.log(currentUser.id)
+        const currentUser = fetchedUsers.find(u => u.email === currentUserEmail);
+        if (currentUser) {
+          setCurrentUser(currentUser);
+          props.setUserName(currentUser.userName);
+          props.setUserId(currentUser.id);
+        }
+        resolve();
+      }, props.accessToken);
+    });
+  }
 
   return(
       <>
@@ -90,13 +88,13 @@ const User = (props) => {
               <div className="user-block__item">
                 <dt className="user-block__item-title">Общий процент достижения</dt>
                 {
-                  user.length >=1 && <dd className="user-block__item-description">{currentUser.goalNumber / currentUser.goalNumber * 100}%</dd>
+                  user.length >=1 && <dd className="user-block__item-description">{currentUser.goalNumber !== 0 ? currentUser.goalNumber / currentUser.goalNumber * 100 : 0}%</dd>
                 }
               </div>
               <div className="user-block__item">
                 <dt className="user-block__item-title">Достигнутые цели</dt>
                 {
-                  user.length >=1 && <dd className="user-block__item-description">{currentUser.goalNumber}</dd>
+                  user.length >=1 && <dd className="user-block__item-description">0</dd>
                 }
               </div>
               <div>

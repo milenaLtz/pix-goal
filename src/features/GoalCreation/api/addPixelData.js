@@ -1,7 +1,7 @@
 import apiConfig from '../../../apiConfig.json'
 
 const addPixelData = async (pixelData, setResponsePixels, accessToken) => {
-  console.log(pixelData)
+
   try {
   const response = await fetch(`${apiConfig.BASE_URL}BackendForPixel/api/pixels`, {
     method: 'POST',

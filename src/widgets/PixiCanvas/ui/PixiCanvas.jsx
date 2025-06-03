@@ -64,7 +64,6 @@ const PixiCanvas = forwardRef(({ accessToken, goalId, setPixelEntity, goalColor,
     }
 
     if (showModal === false) {
-      console.log('Открыть модальное окно для пикселя с ID:', id);
       onOpenModal(pixelData);
       setSelectedPixel(pixelData);
     }
@@ -228,14 +227,14 @@ const PixiCanvas = forwardRef(({ accessToken, goalId, setPixelEntity, goalColor,
   const [zoomLevel, setZoomLevel] = useState(1);
   const zoomIn = () => {
     if (!appRef.current) return;
-    const newZoom = Math.min(zoomLevel + 0.1, 3); // максимальный масштаб — x3
+    const newZoom = Math.min(zoomLevel + 0.1, 3);
     appRef.current.stage.scale.set(newZoom);
     setZoomLevel(newZoom);
   };
 
   const zoomOut = () => {
     if (!appRef.current) return;
-    const newZoom = Math.max(zoomLevel - 0.1, 0.3); // минимальный масштаб — x0.3
+    const newZoom = Math.max(zoomLevel - 0.1, 0.3);
     appRef.current.stage.scale.set(newZoom);
     setZoomLevel(newZoom);
   };
@@ -245,12 +244,13 @@ const PixiCanvas = forwardRef(({ accessToken, goalId, setPixelEntity, goalColor,
       <div className="canvas-container">
         <div className="canvas-block block">
           {isLoading && (
-            <div className="loading-spinner" style={{ height: `${canvasSizeY}` }}>
+            <div className="loading-spinner" style={{ height: `${canvasSizeY * gridSize}px`}}>
               <div className="spinner" />
             </div>
           )}
           <div
             className={`${(canvasSizeX * gridSize) < 800 ? `pixi-canvas pixi-canvas--small ${isLoading ? 'hidden' : ''}` : `pixi-canvas ${isLoading ? 'hidden' : ''}`}`}
+            style={{ height: `${canvasSizeY * gridSize}px`}}
             ref={pixiContainer}
           />
           <div className="pixi-canvas__button-wrapper">

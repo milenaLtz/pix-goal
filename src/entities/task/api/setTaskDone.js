@@ -2,7 +2,7 @@ import doneTaskCheck from "../utils/doneTaskCheck"
 import apiConfig from '../../../apiConfig.json'
 
 const setTaskDone = (taskData, accessToken) => {
-  console.log(doneTaskCheck(taskData))
+
   fetch(`${apiConfig.BASE_URL}BackendForPixel/api/tasks`, {
     method: 'PUT',
     headers: {
@@ -13,11 +13,9 @@ const setTaskDone = (taskData, accessToken) => {
   })
   .then((response) => {
     if (!response.ok) {
-      console.log('pixelData addition failed')
     }
 
     if(response.ok) {
-      console.log('pixelData addition successful')
       return response;
     }})
   .then((data) => data)

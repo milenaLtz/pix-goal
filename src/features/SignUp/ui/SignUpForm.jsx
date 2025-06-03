@@ -63,20 +63,15 @@ const SignUpForm = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-
-    // let hasError = false;
-
+    // eslint-disable-next-line
     for (const [key, value] of Object.entries(signUpData)) {
       if (!value.trim()) {
-        console.log(key)
-        // hasError = true;
         setErrorResponse("Пожалуйста, заполните все обязательные поля");
         return;
       }
     }
 
     if (!password.trim()) {
-      // hasError = true;
       setErrorResponse("Пожалуйста, заполните все обязательные поля");
       return;
     }
@@ -168,7 +163,6 @@ const SignUpForm = () => {
         <div>
           <button className="sign-up__button button button--secondary" type="submit">Зарегистрироваться</button>
         </div>
-        {/* {response && <p className="success">{response}</p>} */}
         {errorResponse && <p className="error">{errorResponse}</p>}
       </form>
     </>

@@ -6,7 +6,7 @@ const userLogIn = (
   setErrorResponse,
   onLogin
 ) => {
-  console.log('data before sending', loginData)
+
   fetch(`${apiConfig.BASE_URL}BackendForPixel/api/auth/login`, {
     method: "POST",
     headers: {
@@ -38,12 +38,10 @@ const userLogIn = (
     .then((token) => {
       if (!token) return;
 
-      console.log("Access token:", token);
       localStorage.setItem("token", token);
       localStorage.setItem('currentUserEmail', loginData.email);
       localStorage.setItem("creationTokenDate", new Date().toISOString());
       setResponse("login successful");
-      console.log(onLogin)
       onLogin(token);
     })
     .catch((error) => {

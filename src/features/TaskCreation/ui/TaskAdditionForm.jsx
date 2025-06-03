@@ -70,8 +70,6 @@ const TaskAdditionForm = ({ goalId, onClose, accessToken, refreshTasks }) => {
     }
   })
 
-  console.log(JSON.stringify(taskData), response)
-
   const [errors, setErrors] = useState({});
   const validate = () => {
     const newErrors = {};

@@ -1,7 +1,7 @@
 import apiConfig from '../../../apiConfig.json'
 
 const getGoals = (setGoals, accessToken, userId) => {
-  console.log(`${apiConfig.BASE_URL}BackendForPixel/api/goals/goals-of-user/${userId}`, accessToken)
+
   fetch(`${apiConfig.BASE_URL}BackendForPixel/api/goals/goals-of-user/${userId}`, {
     method: 'GET',
     headers: {
@@ -16,7 +16,6 @@ const getGoals = (setGoals, accessToken, userId) => {
     return response.text().then(text => text ? JSON.parse(text) : null);
   })
   .then((data) => {
-    console.log(data)
     if (data) {
       setGoals(data);
     } else {

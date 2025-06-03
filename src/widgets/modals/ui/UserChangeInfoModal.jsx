@@ -4,7 +4,6 @@ import updateUser from "../api/updateUser";
 
 const UserChangeInfoModal = (props) => {
 
-  // const [reponse, setResponse] = useState('');
   const [userData, setUserData] = useState({
     id: props.user.id,
     userName: props.user.userName,

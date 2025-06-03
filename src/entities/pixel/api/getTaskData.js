@@ -1,6 +1,7 @@
 import apiConfig from '../../../apiConfig.json'
 
 const getTaskData = (setTask, id, accessToken) => {
+  
   fetch(`${apiConfig.BASE_URL}BackendForPixel/api/tasks/${id}`, {
     method: 'GET',
     headers: {

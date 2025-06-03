@@ -5,7 +5,6 @@ const InfoModal = (props) => {
   const result = props.result;
   const message = props.message;
   const closeModal = props.closeModal;
-  console.log('in info modal', closeModal)
 
   return (
     <>

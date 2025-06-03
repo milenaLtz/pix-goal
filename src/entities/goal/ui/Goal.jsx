@@ -21,6 +21,7 @@ const Goal = (props) => {
     setDeleteModalOpen(false);
     setInfoModalOpen(true);
   };
+
   return (
     <>
       {deleteModalOpen &&
@@ -58,6 +59,7 @@ const Goal = (props) => {
           />,
           document.body
         )}
+      <Link to={"/goalPage/" + props.id} target="_blank" className="goal-card__link" onClick={localStorage.removeItem('pixels')}>
       <section className="card goal-card">
         <img
           className="goal-card__image"
@@ -66,9 +68,7 @@ const Goal = (props) => {
         />
         <div className="goal-card__content-wrapper">
           <div className="goal-card__info-wrapper">
-            <Link to={"/goalPage/" + props.id} className="goal-card__link" onClick={localStorage.removeItem('pixels')}>
               <h3>{props.title}</h3>
-            </Link>
             <p className="goal-card__progress">
               {props.freePixels} {getPixelWord(props.freePixels)} свободны
             </p>
@@ -79,6 +79,7 @@ const Goal = (props) => {
           ></button>
         </div>
       </section>
+      </Link>
     </>
   );
 };

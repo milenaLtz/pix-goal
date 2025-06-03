@@ -26,6 +26,8 @@ const GoalAdditionForm = (props) => {
     pixelData: "",
     goalId: 0
   })
+  
+  // eslint-disable-next-line
   const [responsePixels, setResponsePixels] = useState('');
 
   const handleInputChange = (event) => {
@@ -61,8 +63,6 @@ const GoalAdditionForm = (props) => {
       props.onClose();
     }
   }, [pixelData, response, props])
-
-  console.log(goalData, response, pixelData, responsePixels)
 
   const [errors, setErrors] = useState({});
   const validate = () => {

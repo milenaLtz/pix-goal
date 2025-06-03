@@ -12,13 +12,13 @@ const SignInForm = ({onLogin}) => {
     });
 
     const [showPassword, setShowPassword] = useState(false);
+    // eslint-disable-next-line
     const [emailError, setEmailError] = useState(null);
+    // eslint-disable-next-line
     const [passwordError, setPasswordError] = useState(null);
     const [response, setResponse] = useState('');
     const [errorResponse, setErrorResponse] = useState('');
     const navigate = useNavigate();
-
-    console.log(setEmailError, setPasswordError);
 
     const handleInputChange = (event) => {
       const { name, value } = event.target;
@@ -36,13 +36,9 @@ const SignInForm = ({onLogin}) => {
 
     const handleSubmit = (event) => {
       event.preventDefault();
-
-      // let hasError = false;
-
+      // eslint-disable-next-line
       for (const [key, value] of Object.entries(signInData)) {
         if (!value.trim()) {
-          console.log(key)
-          // hasError = true;
           setErrorResponse("Пожалуйста, заполните все обязательные поля");
           return;
         }

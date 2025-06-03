@@ -39,6 +39,7 @@
   }
 
   &__body-wrapper {
+    display: flex;
     width: 80%;
     max-width: 1440px;
     margin: 0 auto;
@@ -110,5 +111,36 @@
     height: 1060px;
     background-color: rgba($color: #F9B090, $alpha: 0.6);
     filter: blur(450px);
+  }
+
+  &__goal-card-deco {
+    position: relative;
+    width: 210px;
+    height: 210px;
+    margin-left: 100px;
+    padding: 20px;
+    background-color: rgba($color: #ffffff, $alpha: 0.3);
+    border-radius: 10px;
+    box-shadow: 0 10px 25px 0 rgba($color: #656079, $alpha: 0.25);
+  }
+
+  &__goal-deco-image {
+    position: absolute;
+    top: -80px;
+    right: -70px;
+  }
+
+  &__goal-deco-title {
+    margin-top: 130px;
+    margin-bottom: 15px;
+    font-family: "Jura", Arial, sans-serif;
+    font-size: 20px;
+    font-weight: 600;
+    color: #484455;
+  }
+
+  &__goal-deco-text {
+    font-family: "Jura", Arial, sans-serif;
+    color: #484455;
   }
 }

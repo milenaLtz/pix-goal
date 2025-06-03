@@ -1,6 +1,7 @@
 import apiConfig from '../../../apiConfig.json'
 
 const signUp = (signUpData, setResponse, setErrorResponse) => {
+  
   fetch(`${apiConfig.BASE_URL}BackendForPixel/api/auth/register`, {
     method: 'POST',
     credentials: 'include',

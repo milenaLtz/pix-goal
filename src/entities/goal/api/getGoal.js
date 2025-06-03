@@ -1,7 +1,7 @@
 import apiConfig from '../../../apiConfig.json'
 
 const getGoal = (setGoal, id, accessToken) => {
-  console.log(id)
+
   fetch(`${apiConfig.BASE_URL}BackendForPixel/api/goals/${id}`, {
     method: 'GET',
     headers: {

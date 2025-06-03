@@ -1,7 +1,7 @@
 import apiConfig from '../../../apiConfig.json'
 
 const deleteGoal = (setResponse, id, accessToken) => {
-  console.log(`${apiConfig.BASE_URL}BackendForPixel/api/goals/${id}`)
+
   fetch(`${apiConfig.BASE_URL}BackendForPixel/api/goals/${id}`, {
     method: 'DELETE',
     headers: {

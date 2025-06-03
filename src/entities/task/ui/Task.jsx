@@ -91,17 +91,10 @@ const Task = (props) => {
       await deleteTask(taskId, props.accessToken);
 
       await editPixels(modifiedPixels, props.accessToken);
-      console.log(props.refreshTasks)
-      // props.refreshTasks()
       setResponse('task deleted successful');
-      console.log(response)
-      console.log('task deleted')
       setDeleteModalOpen(false);
-      console.log('modal closed')
-      // setInfoModalOpen(true);
     } catch (error) {
       console.error('Error deleting task:', error);
-      // response('task deletion failed');
       setResponse('task deletion failed');
       setDeleteModalOpen(false);
       setInfoModalOpen(true);

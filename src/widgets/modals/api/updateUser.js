@@ -1,7 +1,7 @@
 import apiConfig from '../../../apiConfig.json'
 
 const updateUser = (userData, accessToken, setResponse) => {
-  console.log(JSON.stringify(userData), accessToken)
+
   fetch(`${apiConfig.BASE_URL}BackendForPixel/api/users`, {
     method: 'PUT',
     headers: {

@@ -1,6 +1,5 @@
 import './_introduction.scss';
 import avatar from '../../../shared/icons/default-avatar.svg';
-import cat from '../../../shared/icons/illustration//cat.svg';
 import getPixelIcon from '../../../shared/utils/getPixelIcon';
 import { useState } from 'react';
 import GoalInfoModal from '../../modals/ui/GoalInfoModal';
@@ -21,7 +20,7 @@ const Introduction = (props) => {
           goal={props.goal}
           title={props.greetings}
           description={props.description}
-          image={getPixelIcon(props.image || cat)}
+          image={getPixelIcon(props.image)}
           onClose={toggleGoalInfoModal}
           color={props.color}
           canvasSizeX={props.canvasSizeX}
@@ -32,7 +31,7 @@ const Introduction = (props) => {
       <section className='main-page__introduction introduction'>
         {
           props.page === 'goal' ? (
-            <img className='introduction__image' src={getPixelIcon(props.image || cat)} alt='аватар пользователя'/>
+            <img className='introduction__image' src={getPixelIcon(props.image)} alt='аватар пользователя'/>
           ) : (
             <img className='introduction__image' src={avatar} alt='аватар пользователя'/>
           )

@@ -39,8 +39,6 @@ const GoalInfoModal = (props) => {
     }));
   };
 
-  console.log(goalData)
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -87,7 +85,7 @@ const GoalInfoModal = (props) => {
                 <div className="modal__content-item">
                   <p className="modal__item-title">Описание цели</p>
                   <textarea
-                    className="modal__item-value-edit"
+                    className="modal__textarea"
                     name="goalDescription"
                     value={goalData.goalDescription}
                     onChange={handleInputChange}

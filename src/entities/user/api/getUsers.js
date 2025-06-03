@@ -1,7 +1,7 @@
 import apiConfig from '../../../apiConfig.json'
 
 const getUsers = (setUser, accessToken) => {
-  console.log(`Bearer ${accessToken}`)
+
   fetch(`${apiConfig.BASE_URL}BackendForPixel/api/users`, {
     method: 'GET',
     headers: {

@@ -1,7 +1,7 @@
 import apiConfig from '../../../apiConfig.json'
 
 const updateTask = (taskData, accessToken, setResponse) => {
-  console.log(JSON.stringify(taskData), accessToken)
+
   fetch(`${apiConfig.BASE_URL}BackendForPixel/api/tasks`, {
     method: 'PUT',
     headers: {

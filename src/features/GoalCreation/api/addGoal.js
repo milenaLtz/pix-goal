@@ -1,7 +1,7 @@
 import apiConfig from '../../../apiConfig.json'
 
 const addGoal = (setResponse, taskData, setPixelData, accessToken) => {
-  console.log(JSON.stringify(taskData), accessToken)
+
   fetch(`${apiConfig.BASE_URL}BackendForPixel/api/goals`, {
     method: 'POST',
     headers: {
